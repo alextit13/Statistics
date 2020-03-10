@@ -3,6 +3,7 @@ package com.chart.statistics.presenter.list;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.db.IDbEntry;
 import com.chart.statistics.model.utils.ObjectStatistic;
+import com.chart.statistics.view.add.AddFragment;
 import com.chart.statistics.view.list.IListObjectStatisticsView;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ListObjectStatisticsPresenter implements IListObjectStatisticsPrese
         takeObjectsFromDb();
     }
 
-    private void takeObjectsFromDb(){
+    private void takeObjectsFromDb() {
         List<ObjectStatistic> objectStatisticList = getDbInstance().getAllObjectStatistics();
         view.updateList(objectStatisticList);
     }
@@ -30,10 +31,10 @@ public class ListObjectStatisticsPresenter implements IListObjectStatisticsPrese
 
     @Override
     public void onClickAddFab() {
-        // TODO: 2020-03-09
+        view.showFragment(AddFragment.newInstance());
     }
 
-    private IDbEntry getDbInstance(){
+    private IDbEntry getDbInstance() {
         if (dbEntry == null) {
             dbEntry = new DbEntry();
         }

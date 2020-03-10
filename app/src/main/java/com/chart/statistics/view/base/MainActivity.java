@@ -22,16 +22,18 @@ public class MainActivity extends AppCompatActivity implements INavigation {
     public void showFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flFragmentContainer, fragment, fragment.getTag())
-                .addToBackStack(fragment.getTag())
+                .add(R.id.flFragmentContainer, fragment, fragment.getClass().getName())
+                .addToBackStack(fragment.getClass().getName())
                 .commit();
     }
 
     @Override
-    public void backPressed() {
+    public void onBackPressed() {
         if (!getSupportFragmentManager().getFragments().isEmpty() &&
                 getSupportFragmentManager().getFragments().size() == 1) {
             finish();
+        } else {
+            super.onBackPressed();
         }
     }
 }

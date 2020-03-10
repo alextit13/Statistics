@@ -15,6 +15,7 @@ import com.chart.statistics.R;
 import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.presenter.list.IListObjectStatisticsPresenter;
 import com.chart.statistics.presenter.list.ListObjectStatisticsPresenter;
+import com.chart.statistics.view.base.INavigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,12 @@ public class ListObjectStatisticsFragment extends Fragment
             tvEmptyList.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void showFragment(Fragment fragment) {
+        if (getActivity() == null) return;
+        ((INavigation) getActivity()).showFragment(fragment);
     }
 
     @Override
