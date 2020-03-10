@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class ListObjectStatisticsFragment extends Fragment
     private IListObjectStatisticsPresenter presenter;
     private RecyclerView recyclerView;
     private ObjectStatisticsAdapter adapter;
+    private TextView tvEmptyList;
 
     @Nullable
     @Override
@@ -55,6 +57,9 @@ public class ListObjectStatisticsFragment extends Fragment
     private void initUi() {
         if (getView() == null) return;
 
+        tvEmptyList = getView().findViewById(R.id.tvEmptyObjectStatisticsList);
+        tvEmptyList.setVisibility(View.GONE);
+
         recyclerView = getView().findViewById(R.id.rlListObjectStatistics);
         if (adapter == null) {
             adapter = new ObjectStatisticsAdapter(new ArrayList<ObjectStatistic>(), this);
@@ -74,9 +79,26 @@ public class ListObjectStatisticsFragment extends Fragment
     public void updateList(List<ObjectStatistic> list) {
         if (recyclerView.getAdapter() == null) return;
 
+        if (list.isEmpty()) {
+            setVisibleEmptyList(true);
+            return;
+        } else {
+            setVisibleEmptyList(false);
+        }
+
         adapter.list = list;
         recyclerView.setAdapter(adapter);
         recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void setVisibleEmptyList(boolean isVisibleEmpty) {
+        if (isVisibleEmpty) {
+            tvEmptyList.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            tvEmptyList.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

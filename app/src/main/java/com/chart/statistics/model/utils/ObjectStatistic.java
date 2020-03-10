@@ -8,6 +8,15 @@ public class ObjectStatistic {
     private String name;
     private List<State> states;
 
+    public ObjectStatistic() {
+    }
+
+    public ObjectStatistic(String id, String name, List<State> states) {
+        this.id = id;
+        this.name = name;
+        this.states = states;
+    }
+
     public String getId() {
         return id;
     }

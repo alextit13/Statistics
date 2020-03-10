@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ChartStatistics</string>
+    <string name="lbl_empty_list">У Вас нет объектов.  \nНажмите + что бы добавить.</string>
 </resources>
