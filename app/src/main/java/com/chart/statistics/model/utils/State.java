@@ -4,8 +4,14 @@ public class State {
 
     private String id;
     private String name;
-    private String time;
-    private String description;
+
+    public State() {
+    }
+
+    public State(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -21,21 +27,5 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

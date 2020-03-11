@@ -3,7 +3,10 @@ package com.chart.statistics.presenter.state;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.db.IDbEntry;
 import com.chart.statistics.model.utils.ObjectStatistic;
+import com.chart.statistics.model.utils.State;
 import com.chart.statistics.view.state.IStateView;
+
+import java.util.Date;
 
 public class StatePresenter implements IStatePresenter {
 
@@ -37,7 +40,14 @@ public class StatePresenter implements IStatePresenter {
 
     @Override
     public void onClickFab() {
-        // TODO: 2020-03-11
+        view.showDialog();
+    }
+
+    @Override
+    public void onSelectState(String state) {
+        getDbInstance().addStateToObjectStatistics(objectStatisticsId,
+                new State(String.valueOf(new Date().getTime()), state));
+        getObjectStatisticsFromDb();
     }
 
     private IDbEntry getDbInstance() {

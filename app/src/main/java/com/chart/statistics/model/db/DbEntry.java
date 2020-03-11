@@ -32,13 +32,21 @@ public class DbEntry implements IDbEntry {
         getWritableDb().insert("statistic_table", null, contentValues);
     }
 
+    private void update(ObjectStatistic objectStatistic) {
+        String gsonData = new Gson().toJson(objectStatistic);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", objectStatistic.getId());
+        contentValues.put("data", gsonData);
+        getWritableDb().update("statistic_table", contentValues, "id=" + objectStatistic.getId(), null);
+    }
+
     @Override
     public void addStateToObjectStatistics(String idObjectStatistics, State state) {
         ObjectStatistic objectStatistic = getObjectStatistics(idObjectStatistics);
         List<State> stateList = objectStatistic.getStates();
         stateList.add(state);
         objectStatistic.setStates(stateList);
-        insertObjectStatistics(objectStatistic);
+        update(objectStatistic);
     }
 
     @Override

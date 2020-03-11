@@ -1,10 +1,14 @@
 package com.chart.statistics.view.state;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -70,6 +74,33 @@ public class StateFragment extends Fragment implements IStateView {
                 presenter.onClickFab();
             }
         });
+    }
+
+    @Override
+    public void showDialog() {
+        if (getContext() == null)
+            return;
+
+        final String[] arrayOfStrings = getResources().getStringArray(R.array.States);
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_select_state);
+        dialog.setTitle("Состояние объекта");
+
+        final ListView lst = dialog.findViewById(R.id.listViewStates);
+
+        lst.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_checked, android.R.id.text1,
+                arrayOfStrings));
+
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int item, long arg3) {
+                presenter.onSelectState(arrayOfStrings[item]);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

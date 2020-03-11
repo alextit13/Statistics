@@ -8,4 +8,6 @@ public interface IStatePresenter {
     void onViewDetach();
 
     void onClickFab();
+
+    void onSelectState(String state);
 }

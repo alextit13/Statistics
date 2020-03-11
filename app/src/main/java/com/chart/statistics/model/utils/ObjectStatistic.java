@@ -1,5 +1,7 @@
 package com.chart.statistics.model.utils;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class ObjectStatistic {
@@ -39,5 +41,14 @@ public class ObjectStatistic {
 
     public void setStates(List<State> states) {
         this.states = states;
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectStatistic{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", states=" + states +
+                '}';
     }
 }
