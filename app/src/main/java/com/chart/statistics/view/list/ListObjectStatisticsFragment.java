@@ -16,6 +16,7 @@ import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.presenter.list.IListObjectStatisticsPresenter;
 import com.chart.statistics.presenter.list.ListObjectStatisticsPresenter;
 import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.state.StateFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,8 @@ public class ListObjectStatisticsFragment extends Fragment
 
     @Override
     public void onClickObject(ObjectStatistic statisticItem) {
-        // TODO: 2020-03-09
+        if (getActivity() == null) return;
+
+        ((INavigation) getActivity()).showFragment(StateFragment.newInstance(statisticItem.getId()));
     }
 }
