@@ -1,5 +1,6 @@
 package com.chart.statistics.presenter.state;
 
+import com.chart.statistics.model.DataHolder;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.db.IDbEntry;
 import com.chart.statistics.model.utils.ObjectStatistic;
@@ -40,7 +41,7 @@ public class StatePresenter implements IStatePresenter {
 
     @Override
     public void onClickFab() {
-        view.showDialog();
+        view.showDialog(DataHolder.newInstance().getDataStatesAsArray());
     }
 
     @Override
@@ -48,6 +49,13 @@ public class StatePresenter implements IStatePresenter {
         getDbInstance().addStateToObjectStatistics(objectStatisticsId,
                 new State(String.valueOf(new Date().getTime()), state));
         getObjectStatisticsFromDb();
+    }
+
+    @Override
+    public void onChartViewWasInit() {
+        if (objectStatistic == null) return;
+
+        view.setChart(objectStatistic.getStates());
     }
 
     private IDbEntry getDbInstance() {

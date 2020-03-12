@@ -10,4 +10,6 @@ public interface IStatePresenter {
     void onClickFab();
 
     void onSelectState(String state);
+
+    void onChartViewWasInit();
 }
