@@ -22,10 +22,9 @@ public class DataHolder {
 
     private HashMap<String, Integer> getDataStates() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("Простой", Color.RED);
         map.put("Работает", Color.GREEN);
-        map.put("Ремонт", Color.YELLOW);
-        map.put("Обед", Color.BLUE);
+        map.put("Не работает", Color.RED);
+        map.put("Поломка", Color.YELLOW);
         return map;
     }
 

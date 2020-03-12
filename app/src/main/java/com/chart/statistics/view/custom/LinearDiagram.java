@@ -56,10 +56,26 @@ public class LinearDiagram extends View {
                     getStartCoordinate(i),
                     0,
                     getEndCoordinate(i),
-                    getHeight()
+                    getHeight() / 3
             );
             paint.setColor(getColorByStateName(state));
             canvas.drawRect(rect, paint);
+        }
+
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(2);
+
+        Rect rect = new Rect(0, getHeight() - 2, getWidth(), getHeight());
+        canvas.drawRect(rect, paint);
+
+        for (int i = 0; i <= list.size() - 1; i++) {
+            canvas.drawLine(
+                    getStartCoordinate(i),
+                    getHeight(),
+                    getStartCoordinate(i),
+                    getHeight() / 3,
+                    paint
+            );
         }
     }
 

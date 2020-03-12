@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.model.utils.State;
 import com.chart.statistics.presenter.state.IStatePresenter;
 import com.chart.statistics.presenter.state.StatePresenter;
+import com.chart.statistics.view.base.INavigation;
 import com.chart.statistics.view.custom.LinearDiagram;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -115,6 +117,18 @@ public class StateFragment extends Fragment implements IStateView {
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void closeView() {
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
     }
 
     @Override

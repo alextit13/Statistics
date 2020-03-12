@@ -10,4 +10,8 @@ public interface IStateView {
     void showDialog(String [] arrayStates);
 
     void setChart(List<State> states);
+
+    void showToastMessage(String message);
+
+    void closeView();
 }

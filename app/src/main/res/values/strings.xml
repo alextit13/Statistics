@@ -8,4 +8,5 @@
     <string name="msg_enter_name">Введите имя</string>
     <string name="msg_enter_description">Введите описание</string>
     <string name="cd_linear_chart">Image linear chart</string>
+    <string name="msg_state_was_changed">Состояние изменено</string>
 </resources>

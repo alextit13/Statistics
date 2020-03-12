@@ -1,5 +1,7 @@
 package com.chart.statistics.presenter.state;
 
+import com.chart.statistics.R;
+import com.chart.statistics.model.App;
 import com.chart.statistics.model.DataHolder;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.db.IDbEntry;
@@ -48,7 +50,8 @@ public class StatePresenter implements IStatePresenter {
     public void onSelectState(String state) {
         getDbInstance().addStateToObjectStatistics(objectStatisticsId,
                 new State(String.valueOf(new Date().getTime()), state));
-        getObjectStatisticsFromDb();
+        view.showToastMessage(App.instance.getString(R.string.msg_state_was_changed));
+        view.closeView();
     }
 
     @Override
