@@ -83,8 +83,8 @@ public class LinearDiagram extends View {
         if (position == 0) {
             return 0;
         } else {
-            long time = Long.valueOf(list.get(position).getId()); // 1070
-            long timeFirstEvent = Long.valueOf(list.get(0).getId()); // 234
+            long time = Long.valueOf(list.get(position).getId());
+            long timeFirstEvent = Long.valueOf(list.get(0).getId());
             long numMillisecondsInAllInterval = (new Date().getTime() - (timeFirstEvent));
             float px = getWidth() / (float) numMillisecondsInAllInterval;
             return (int) ((time - timeFirstEvent) * px);

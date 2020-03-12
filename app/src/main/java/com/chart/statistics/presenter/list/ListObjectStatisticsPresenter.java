@@ -34,6 +34,12 @@ public class ListObjectStatisticsPresenter implements IListObjectStatisticsPrese
         view.showFragment(AddFragment.newInstance());
     }
 
+    @Override
+    public void onClickDeleteObject(ObjectStatistic objectStatistic) {
+        getDbInstance().deleteObjectStatistics(objectStatistic);
+        takeObjectsFromDb();
+    }
+
     private IDbEntry getDbInstance() {
         if (dbEntry == null) {
             dbEntry = new DbEntry();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -9,13 +9,27 @@
     <TextView
         android:id="@+id/tvNameStatistics"
         tools:text="Some text"
+        android:layout_centerVertical="true"
         android:layout_margin="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <View
+        android:layout_alignParentBottom="true"
         android:background="#000"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivDeleteObjectStatistics"
+        android:contentDescription="@string/cd_delete_object"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

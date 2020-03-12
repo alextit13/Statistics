@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChartStatistics</string>
+    <string name="app_name">Статистика</string>
     <string name="lbl_empty_list">У Вас нет объектов.  \nНажмите + что бы добавить.</string>
     <string name="hint_object_statistics_name">Название</string>
     <string name="hint_object_statistics_subscribe">Описание</string>
@@ -9,4 +9,9 @@
     <string name="msg_enter_description">Введите описание</string>
     <string name="cd_linear_chart">Image linear chart</string>
     <string name="msg_state_was_changed">Состояние изменено</string>
+    <string name="cd_delete_object">Delete object</string>
+    <string name="lbl_delete">Удалить</string>
+    <string name="lbl_confirm_delete">Вы действиельно хотите удалить объект?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>

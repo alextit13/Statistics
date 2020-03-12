@@ -1,5 +1,6 @@
 package com.chart.statistics.view.list;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -121,5 +123,28 @@ public class ListObjectStatisticsFragment extends Fragment
         if (getActivity() == null) return;
 
         ((INavigation) getActivity()).showFragment(StateFragment.newInstance(statisticItem.getId()));
+    }
+
+    @Override
+    public void onClickDeleteObject(final ObjectStatistic objectStatistic) {
+        if (getContext() == null) return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(getString(R.string.lbl_delete));
+        builder.setMessage(getString(R.string.lbl_confirm_delete));
+        builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                presenter.onClickDeleteObject(objectStatistic);
+            }
+        });
+        builder.create().show();
     }
 }

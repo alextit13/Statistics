@@ -14,4 +14,6 @@ public interface IDbEntry {
     ObjectStatistic getObjectStatistics(String id);
 
     List<ObjectStatistic> getAllObjectStatistics();
+
+    void deleteObjectStatistics(ObjectStatistic objectStatistic);
 }

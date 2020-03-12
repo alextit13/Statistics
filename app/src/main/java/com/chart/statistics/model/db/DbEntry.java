@@ -82,4 +82,9 @@ public class DbEntry implements IDbEntry {
         cursor.close();
         return objectStatisticList;
     }
+
+    @Override
+    public void deleteObjectStatistics(ObjectStatistic objectStatistic) {
+        getWritableDb().delete("statistic_table", "id=" + objectStatistic.getId(), null);
+    }
 }

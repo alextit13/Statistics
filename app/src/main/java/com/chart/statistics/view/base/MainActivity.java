@@ -22,15 +22,14 @@ public class MainActivity extends AppCompatActivity implements INavigation {
     public void showFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.flFragmentContainer, fragment, fragment.getClass().getName())
+                .replace(R.id.flFragmentContainer, fragment, fragment.getClass().getName())
                 .addToBackStack(fragment.getClass().getName())
                 .commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (!getSupportFragmentManager().getFragments().isEmpty() &&
-                getSupportFragmentManager().getFragments().size() == 1) {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
         } else {
             super.onBackPressed();

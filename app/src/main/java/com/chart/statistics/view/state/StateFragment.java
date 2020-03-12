@@ -1,5 +1,6 @@
 package com.chart.statistics.view.state;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -143,11 +144,19 @@ public class StateFragment extends Fragment implements IStateView {
         super.onPause();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void updateUi(ObjectStatistic objectStatistic) {
         if (getView() == null) return;
 
+        String objectStatisticsState = "";
+        if (!objectStatistic.getStates().isEmpty()) {
+            objectStatisticsState = " (" + objectStatistic.getStates().get(
+                    objectStatistic.getStates().size() - 1
+            ).getName() + ")";
+        }
+
         ((TextView) getView().findViewById(R.id.tvNameObjectStatistics))
-                .setText(objectStatistic.getName());
+                .setText(objectStatistic.getName() + objectStatisticsState);
     }
 }

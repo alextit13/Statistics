@@ -3,6 +3,7 @@ package com.chart.statistics.view.list;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,13 @@ public class ObjectStatisticsAdapter extends RecyclerView.Adapter<ObjectStatisti
                         callback.onClickObject(list.get(position));
                     }
                 });
+        holder.delete
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        callback.onClickDeleteObject(list.get(position));
+                    }
+                });
     }
 
     @Override
@@ -52,10 +60,12 @@ public class ObjectStatisticsAdapter extends RecyclerView.Adapter<ObjectStatisti
     class Holder extends RecyclerView.ViewHolder {
 
         private TextView name;
+        private ImageView delete;
 
         Holder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvNameStatistics);
+            delete = itemView.findViewById(R.id.ivDeleteObjectStatistics);
         }
     }
 }
