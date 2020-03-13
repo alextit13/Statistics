@@ -65,14 +65,18 @@ public class LinearDiagram extends View {
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(2);
 
-        Rect rect = new Rect(0, getHeight() - 2, getWidth(), getHeight());
-        canvas.drawRect(rect, paint);
+        // bottom horizontal line
+        canvas.drawLine(0f, getHeight(), getWidth(), getHeight(), paint);
+        // first vertical line
+        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight(), 0f + paint.getStrokeWidth(), getHeight() / 3, paint);
 
-        for (int i = 0; i <= list.size() - 1; i++) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            float startX = (getStartCoordinate(i) + getStartCoordinate(i + 1)) / 2;
+
             canvas.drawLine(
-                    getStartCoordinate(i),
+                    startX,
                     getHeight(),
-                    getStartCoordinate(i),
+                    startX,
                     getHeight() / 3,
                     paint
             );
