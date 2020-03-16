@@ -21,4 +21,6 @@
     <string name="msg_enter_correct_name">Введите корректное название объекта</string>
     <string name="msg_save_success">Успешно сохранено</string>
     <string name="lbl_state_object">Состояние объекта</string>
+    <string name="title_add_object">Добавьте объекты</string>
+    <string name="title_add_state">Добавьте состояния</string>
 </resources>

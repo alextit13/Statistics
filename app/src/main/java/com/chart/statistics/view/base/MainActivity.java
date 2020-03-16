@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
 import com.chart.statistics.view.add_object.AddObjectSFragment;
-import com.chart.statistics.view.list.ListObjectStatisticsFragment;
 
 public class MainActivity extends AppCompatActivity implements INavigation {
 
@@ -16,16 +15,17 @@ public class MainActivity extends AppCompatActivity implements INavigation {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        showFragment(new AddObjectSFragment());
+        showFragment(new AddObjectSFragment(), getString(R.string.title_add_object));
     }
 
     @Override
-    public void showFragment(Fragment fragment) {
+    public void showFragment(Fragment fragment, String title) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flFragmentContainer, fragment, fragment.getClass().getName())
                 .addToBackStack(fragment.getClass().getName())
                 .commit();
+        setTitle(title);
     }
 
     @Override

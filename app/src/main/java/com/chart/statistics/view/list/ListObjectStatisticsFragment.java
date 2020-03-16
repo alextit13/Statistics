@@ -108,7 +108,7 @@ public class ListObjectStatisticsFragment extends Fragment
     @Override
     public void showFragment(Fragment fragment) {
         if (getActivity() == null) return;
-        ((INavigation) getActivity()).showFragment(fragment);
+        //((INavigation) getActivity()).showFragment(fragment);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class ListObjectStatisticsFragment extends Fragment
     public void onClickObject(ObjectStatistic statisticItem) {
         if (getActivity() == null) return;
 
-        ((INavigation) getActivity()).showFragment(StateFragment.newInstance(statisticItem.getId()));
+        //((INavigation) getActivity()).showFragment(StateFragment.newInstance(statisticItem.getId()));
     }
 
     @Override

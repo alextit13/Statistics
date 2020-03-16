@@ -85,7 +85,7 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
     public void showAddStateScreen() {
         if (getActivity() == null) return;
 
-        ((INavigation) getActivity()).showFragment(new AddStateFragment());
+        ((INavigation) getActivity()).showFragment(new AddStateFragment(), getString(R.string.title_add_state));
     }
 
     @Override
