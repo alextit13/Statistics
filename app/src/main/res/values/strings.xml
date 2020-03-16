@@ -17,4 +17,6 @@
     <string name="lbl_save_observation">Сохранить наблюдение</string>
     <string name="lbl_finish_observation">Закончить наблюдение</string>
     <string name="lbl_observation">Наблюдение</string>
+    <string name="lbl_name_observation">Название наблюдения</string>
+    <string name="title_finish">Завершить</string>
 </resources>

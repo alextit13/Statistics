@@ -12,4 +12,6 @@ public interface IAddDataView {
     void showToastMessage(@StringRes int idMessage);
 
     void clearFieldsToDefault();
+
+    void showFinishScreen();
 }

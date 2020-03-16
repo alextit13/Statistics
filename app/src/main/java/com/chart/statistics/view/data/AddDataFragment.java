@@ -17,8 +17,12 @@ import androidx.fragment.app.Fragment;
 import com.chart.statistics.R;
 import com.chart.statistics.presenter.add_data.AddDataPresenter;
 import com.chart.statistics.presenter.add_data.IAddDataPresenter;
+import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.finish.FinishFragment;
 
 import java.util.List;
+
+import static com.chart.statistics.view.finish.FinishFragment.KEY_OBSERVATION_ID;
 
 public class AddDataFragment extends Fragment implements IAddDataView {
 
@@ -32,7 +36,7 @@ public class AddDataFragment extends Fragment implements IAddDataView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_data_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_add_data, container, false);
     }
 
     @Override
@@ -111,6 +115,18 @@ public class AddDataFragment extends Fragment implements IAddDataView {
         if (!stateList.isEmpty()) {
             stateSpinner.setSelection(0);
         }
+    }
+
+    @Override
+    public void showFinishScreen() {
+        if (getActivity() == null)
+            return;
+
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_OBSERVATION_ID, "-1");
+        FinishFragment finishFragment = new FinishFragment();
+        finishFragment.setArguments(bundle);
+        ((INavigation) getActivity()).showFragment(finishFragment, getString(R.string.title_finish));
     }
 
     @Override

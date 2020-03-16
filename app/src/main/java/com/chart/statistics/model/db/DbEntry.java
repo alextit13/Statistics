@@ -6,16 +6,19 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.chart.statistics.model.App;
 import com.chart.statistics.model.utils.ObjectStatistic;
+import com.chart.statistics.model.utils.Observation;
 import com.chart.statistics.model.utils.State;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DbEntry implements IDbEntry {
 
     private DbObjectsHelper dbObjectHelper;
     private DbStateHelper dbStateHelper;
+    private DbObservationHelper dbObservationHelper;
 
     private SQLiteDatabase getWritableObjectsDb() {
         if (dbObjectHelper == null) {
@@ -31,6 +34,13 @@ public class DbEntry implements IDbEntry {
         return dbStateHelper.getWritableDatabase();
     }
 
+    private SQLiteDatabase getWritableObservationDb() {
+        if (dbObservationHelper == null) {
+            dbObservationHelper = new DbObservationHelper(App.instance);
+        }
+        return dbObservationHelper.getWritableDatabase();
+    }
+
     @Override
     public void insertObjectStatistics(ObjectStatistic objectStatistic) {
         String gsonData = new Gson().toJson(objectStatistic);
@@ -40,7 +50,7 @@ public class DbEntry implements IDbEntry {
         getWritableObjectsDb().insert("statistic_table", null, contentValues);
     }
 
-    private void update(ObjectStatistic objectStatistic) {
+    private void updateObjectStatistics(ObjectStatistic objectStatistic) {
         String gsonData = new Gson().toJson(objectStatistic);
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", objectStatistic.getId());
@@ -56,7 +66,7 @@ public class DbEntry implements IDbEntry {
         List<State> stateList = objectStatistic.getStates();
         stateList.add(state);
         objectStatistic.setStates(stateList);
-        update(objectStatistic);
+        updateObjectStatistics(objectStatistic);
     }
 
     @Override
@@ -165,6 +175,67 @@ public class DbEntry implements IDbEntry {
         }
         deleteObjectStatisticsById(idFindBoject);
         return true;
+    }
+
+    @Override
+    public void saveObservation(Observation observation) {
+        String gsonData = new Gson().toJson(observation);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", observation.getId());
+        contentValues.put("data", gsonData);
+        getWritableObservationDb().insert("observation_table", null, contentValues);
+    }
+
+    @Override
+    public void updateObservation(Observation observation) {
+        String gsonData = new Gson().toJson(observation);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", observation.getId());
+        contentValues.put("data", gsonData);
+        getWritableObservationDb()
+                .update("observation_table", contentValues,
+                        "id=" + observation.getId(), null);
+    }
+
+    @Override
+    public List<Observation> getAllObservation() {
+        List<Observation> observationList = new ArrayList<>();
+        Cursor cursor = getWritableStateDb().query(
+                "observation_table",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        if (cursor.moveToFirst()) {
+            int dataColumnIndex = cursor.getColumnIndex("data");
+            do {
+                String data = cursor.getString(dataColumnIndex);
+                Observation objectStatistic = new Gson().fromJson(data, Observation.class);
+                observationList.add(objectStatistic);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return observationList;
+    }
+
+    @Override
+    public Observation getLastNonCompleteConfirmation() {
+        List<Observation> list = getAllObservation();
+        Observation observation = null;
+        for (Observation o : list) {
+            if (o.isCompleted())
+                observation = o;
+        }
+        if (observation == null) {
+            observation = new Observation(
+                    String.valueOf(new Date().getTime()),
+                    "",
+                    new ArrayList<ObjectStatistic>()
+            );
+        }
+        return observation;
     }
 
     private static DbEntry instance;

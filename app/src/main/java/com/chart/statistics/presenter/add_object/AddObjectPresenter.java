@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import com.chart.statistics.R;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.utils.ObjectStatistic;
+import com.chart.statistics.model.utils.Observation;
 import com.chart.statistics.model.utils.State;
 import com.chart.statistics.view.add_object.IAddObjectSView;
 
@@ -18,6 +19,12 @@ public class AddObjectPresenter implements IAddObjectSPresenter {
     @Override
     public void onViewAttach(IAddObjectSView view) {
         this.view = view;
+        handleNonCompleteObservation();
+    }
+
+    private void handleNonCompleteObservation() {
+        Observation observation = DbEntry.newInstance().getLastNonCompleteConfirmation();
+        // TODO(): Finish here
     }
 
     @SuppressLint("ResourceType")

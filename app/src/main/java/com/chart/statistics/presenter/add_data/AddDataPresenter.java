@@ -58,7 +58,7 @@ public class AddDataPresenter implements IAddDataPresenter {
 
     @Override
     public void onClickFinishObservation() {
-
+        view.showFinishScreen();
     }
 
     private List<String> getObjectStatisticListAsStrings() {

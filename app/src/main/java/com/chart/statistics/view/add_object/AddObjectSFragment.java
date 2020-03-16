@@ -31,7 +31,7 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_object_s_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_add_object_s, container, false);
     }
 
     @Override
