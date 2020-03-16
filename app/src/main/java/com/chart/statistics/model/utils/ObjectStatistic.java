@@ -1,7 +1,5 @@
 package com.chart.statistics.model.utils;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
 
 public class ObjectStatistic {

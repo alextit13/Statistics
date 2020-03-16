@@ -16,4 +16,8 @@ public interface IDbEntry {
     List<ObjectStatistic> getAllObjectStatistics();
 
     void deleteObjectStatistics(ObjectStatistic objectStatistic);
+
+    boolean deleteObjectStatisticsByName(String name);
+
+    void deleteObjectStatisticsById(String id);
 }

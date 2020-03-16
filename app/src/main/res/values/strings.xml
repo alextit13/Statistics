@@ -14,4 +14,10 @@
     <string name="lbl_confirm_delete">Вы действиельно хотите удалить объект?</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="lbl_name_object">Название объекта</string>
+    <string name="lbl_save">Сохранить</string>
+    <string name="lbl_next">Далее</string>
+    <string name="msg_delete_success">Успешно удалено</string>
+    <string name="msg_enter_correct_name">Введите корректное название объекта</string>
+    <string name="msg_save_success">Успешно сохранено</string>
 </resources>

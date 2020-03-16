@@ -87,4 +87,34 @@ public class DbEntry implements IDbEntry {
     public void deleteObjectStatistics(ObjectStatistic objectStatistic) {
         getWritableDb().delete("statistic_table", "id=" + objectStatistic.getId(), null);
     }
+
+    @Override
+    public void deleteObjectStatisticsById(String id) {
+        getWritableDb().delete("statistic_table", "id=" + id, null);
+    }
+
+    @Override
+    public boolean deleteObjectStatisticsByName(String name) {
+        String idFindBoject = "";
+        List<ObjectStatistic> list = getAllObjectStatistics();
+        for (ObjectStatistic objectStatistic : list) {
+            if (objectStatistic.getName().equals(name)) {
+                idFindBoject = objectStatistic.getId();
+            }
+        }
+        if (idFindBoject.equals("")) {
+            return false;
+        }
+        deleteObjectStatisticsById(idFindBoject);
+        return true;
+    }
+
+    private static DbEntry instance;
+
+    public static DbEntry newInstance() {
+        if (instance == null) {
+            instance = new DbEntry();
+        }
+        return instance;
+    }
 }

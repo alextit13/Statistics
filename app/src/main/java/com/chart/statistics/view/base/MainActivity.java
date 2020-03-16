@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
+import com.chart.statistics.view.add_object.AddObjectSFragment;
 import com.chart.statistics.view.list.ListObjectStatisticsFragment;
 
 public class MainActivity extends AppCompatActivity implements INavigation {
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements INavigation {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        showFragment(ListObjectStatisticsFragment.newInstance());
+        showFragment(new AddObjectSFragment());
     }
 
     @Override

@@ -108,7 +108,7 @@ public class LinearDiagram extends View {
         return DataHolder.newInstance().getStateColorByState(state);
     }
 
-    public void setSourseData(List<State> stateList) {
+    public void setSourceData(List<State> stateList) {
         list = stateList;
         invalidate();
     }

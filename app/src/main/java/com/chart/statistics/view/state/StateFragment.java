@@ -22,7 +22,7 @@ import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.model.utils.State;
 import com.chart.statistics.presenter.state.IStatePresenter;
 import com.chart.statistics.presenter.state.StatePresenter;
-import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.custom.CircleDiagram;
 import com.chart.statistics.view.custom.LinearDiagram;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,7 +45,7 @@ public class StateFragment extends Fragment implements IStateView {
 
     private IStatePresenter presenter;
     private FloatingActionButton fab;
-    private LinearDiagram chartLinearDiagram;
+    private CircleDiagram chartLinearDiagram;
     private ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener;
 
     @Nullable
@@ -134,7 +134,7 @@ public class StateFragment extends Fragment implements IStateView {
 
     @Override
     public void setChart(List<State> states) {
-        chartLinearDiagram.setSourseData(states);
+        chartLinearDiagram.setSourceData(states);
     }
 
     @Override
