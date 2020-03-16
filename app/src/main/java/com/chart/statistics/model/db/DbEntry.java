@@ -14,13 +14,21 @@ import java.util.List;
 
 public class DbEntry implements IDbEntry {
 
-    private DbHelper dbHelper;
+    private DbObjectsHelper dbObjectHelper;
+    private DbStateHelper dbStateHelper;
 
-    private SQLiteDatabase getWritableDb() {
-        if (dbHelper == null) {
-            dbHelper = new DbHelper(App.instance);
+    private SQLiteDatabase getWritableObjectsDb() {
+        if (dbObjectHelper == null) {
+            dbObjectHelper = new DbObjectsHelper(App.instance);
         }
-        return dbHelper.getWritableDatabase();
+        return dbObjectHelper.getWritableDatabase();
+    }
+
+    private SQLiteDatabase getWritableStateDb() {
+        if (dbStateHelper == null) {
+            dbStateHelper = new DbStateHelper(App.instance);
+        }
+        return dbStateHelper.getWritableDatabase();
     }
 
     @Override
@@ -29,7 +37,7 @@ public class DbEntry implements IDbEntry {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", objectStatistic.getId());
         contentValues.put("data", gsonData);
-        getWritableDb().insert("statistic_table", null, contentValues);
+        getWritableObjectsDb().insert("statistic_table", null, contentValues);
     }
 
     private void update(ObjectStatistic objectStatistic) {
@@ -37,7 +45,9 @@ public class DbEntry implements IDbEntry {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", objectStatistic.getId());
         contentValues.put("data", gsonData);
-        getWritableDb().update("statistic_table", contentValues, "id=" + objectStatistic.getId(), null);
+        getWritableObjectsDb()
+                .update("statistic_table", contentValues,
+                        "id=" + objectStatistic.getId(), null);
     }
 
     @Override
@@ -63,7 +73,7 @@ public class DbEntry implements IDbEntry {
     @Override
     public List<ObjectStatistic> getAllObjectStatistics() {
         List<ObjectStatistic> objectStatisticList = new ArrayList<>();
-        Cursor cursor = getWritableDb().query(
+        Cursor cursor = getWritableObjectsDb().query(
                 "statistic_table",
                 null,
                 null,
@@ -85,16 +95,64 @@ public class DbEntry implements IDbEntry {
 
     @Override
     public void deleteObjectStatistics(ObjectStatistic objectStatistic) {
-        getWritableDb().delete("statistic_table", "id=" + objectStatistic.getId(), null);
+        getWritableObjectsDb().delete("statistic_table", "id=" + objectStatistic.getId(), null);
     }
 
     @Override
     public void deleteObjectStatisticsById(String id) {
-        getWritableDb().delete("statistic_table", "id=" + id, null);
+        getWritableObjectsDb().delete("statistic_table", "id=" + id, null);
     }
 
     @Override
     public boolean deleteObjectStatisticsByName(String name) {
+        String idFindBoject = "";
+        List<ObjectStatistic> list = getAllObjectStatistics();
+        for (ObjectStatistic objectStatistic : list) {
+            if (objectStatistic.getName().equals(name)) {
+                idFindBoject = objectStatistic.getId();
+            }
+        }
+        if (idFindBoject.equals("")) {
+            return false;
+        }
+        deleteObjectStatisticsById(idFindBoject);
+        return true;
+    }
+
+    @Override
+    public void insertState(State state) {
+        String gsonData = new Gson().toJson(state);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", state.getId());
+        contentValues.put("data", gsonData);
+        getWritableStateDb().insert("state_table", null, contentValues);
+    }
+
+    @Override
+    public List<State> getAllState() {
+        List<State> stateList = new ArrayList<>();
+        Cursor cursor = getWritableStateDb().query(
+                "state_table",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        if (cursor.moveToFirst()) {
+            int dataColumnIndex = cursor.getColumnIndex("data");
+            do {
+                String data = cursor.getString(dataColumnIndex);
+                State objectStatistic = new Gson().fromJson(data, State.class);
+                stateList.add(objectStatistic);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return stateList;
+    }
+
+    @Override
+    public boolean deleteStateByName(String name) {
         String idFindBoject = "";
         List<ObjectStatistic> list = getAllObjectStatistics();
         for (ObjectStatistic objectStatistic : list) {

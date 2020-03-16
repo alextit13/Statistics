@@ -4,4 +4,6 @@ import androidx.annotation.IdRes;
 
 public interface IAddObjectSView {
     void showToastMessage(@IdRes int idMessage);
+
+    void showAddStateScreen();
 }

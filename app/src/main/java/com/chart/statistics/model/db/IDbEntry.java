@@ -20,4 +20,10 @@ public interface IDbEntry {
     boolean deleteObjectStatisticsByName(String name);
 
     void deleteObjectStatisticsById(String id);
+
+    void insertState(State state);
+
+    boolean deleteStateByName(String name);
+
+    List<State> getAllState();
 }

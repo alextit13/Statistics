@@ -54,7 +54,7 @@ public class AddObjectPresenter implements IAddObjectSPresenter {
 
     @Override
     public void onClickNext() {
-
+        view.showAddStateScreen();
     }
 
     @Override

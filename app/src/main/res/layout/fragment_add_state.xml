@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/etNameObjectS"
+            android:id="@+id/etNameState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/lbl_name_object"
+            android:text="@string/lbl_state_object"
             android:textAlignment="center" />
 
     </LinearLayout>
@@ -33,7 +33,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnSaveState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +41,7 @@
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnDeleteState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,7 +49,7 @@
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btnNext"
+            android:id="@+id/btnNextState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

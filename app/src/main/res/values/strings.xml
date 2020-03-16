@@ -20,4 +20,5 @@
     <string name="msg_delete_success">Успешно удалено</string>
     <string name="msg_enter_correct_name">Введите корректное название объекта</string>
     <string name="msg_save_success">Успешно сохранено</string>
+    <string name="lbl_state_object">Состояние объекта</string>
 </resources>

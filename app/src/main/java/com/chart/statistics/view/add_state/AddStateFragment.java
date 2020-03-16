@@ -1,4 +1,4 @@
-package com.chart.statistics.view.add_object;
+package com.chart.statistics.view.add_state;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,14 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
-import com.chart.statistics.presenter.add_object.AddObjectPresenter;
-import com.chart.statistics.presenter.add_object.IAddObjectSPresenter;
-import com.chart.statistics.view.add_state.AddStateFragment;
-import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.presenter.add_state.AddStatePresenter;
+import com.chart.statistics.presenter.add_state.IAddStatePresenter;
 
-public class AddObjectSFragment extends Fragment implements IAddObjectSView {
+public class AddStateFragment extends Fragment implements IAddStateView {
 
-    private IAddObjectSPresenter presenter;
+    private IAddStatePresenter presenter;
 
     private EditText nameEditText;
     private Button saveBtn;
@@ -31,14 +29,14 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_object_s_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_add_state, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (presenter == null) {
-            presenter = new AddObjectPresenter();
+            presenter = new AddStatePresenter();
         }
         initUi();
         initListeners();
@@ -48,13 +46,11 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
     private void initUi() {
         if (getView() == null) return;
 
-        nameEditText = getView().findViewById(R.id.etNameObjectS);
-        saveBtn = getView().findViewById(R.id.btnSave);
-        deleteBtn = getView().findViewById(R.id.btnDelete);
-        nextBtn = getView().findViewById(R.id.btnNext);
-    }
+        nameEditText = getView().findViewById(R.id.etNameState);
+        saveBtn = getView().findViewById(R.id.btnSaveState);
+        deleteBtn = getView().findViewById(R.id.btnDeleteState);
+        nextBtn = getView().findViewById(R.id.btnNextState);
 
-    private void initListeners() {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,16 +77,14 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
         Toast.makeText(getContext(), idMessage, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void showAddStateScreen() {
-        if (getActivity() == null) return;
+    private void initListeners() {
 
-        ((INavigation) getActivity()).showFragment(new AddStateFragment());
     }
 
     @Override
     public void onPause() {
         presenter.onViewDetach();
+        presenter = null;
         super.onPause();
     }
 }
