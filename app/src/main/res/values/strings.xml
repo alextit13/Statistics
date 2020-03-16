@@ -1,19 +1,7 @@
 <resources>
     <string name="app_name">Статистика</string>
-    <string name="lbl_empty_list">У Вас нет объектов.  \nНажмите + что бы добавить.</string>
-    <string name="hint_object_statistics_name">Название</string>
-    <string name="hint_object_statistics_subscribe">Описание</string>
-    <string name="lbl_confirm">Готово</string>
-    <string name="lbl_cancel">Отмена</string>
     <string name="msg_enter_name">Введите имя</string>
-    <string name="msg_enter_description">Введите описание</string>
-    <string name="cd_linear_chart">Image linear chart</string>
-    <string name="msg_state_was_changed">Состояние изменено</string>
-    <string name="cd_delete_object">Delete object</string>
     <string name="lbl_delete">Удалить</string>
-    <string name="lbl_confirm_delete">Вы действиельно хотите удалить объект?</string>
-    <string name="no">Нет</string>
-    <string name="yes">Да</string>
     <string name="lbl_name_object">Название объекта</string>
     <string name="lbl_save">Сохранить</string>
     <string name="lbl_next">Далее</string>
@@ -23,4 +11,10 @@
     <string name="lbl_state_object">Состояние объекта</string>
     <string name="title_add_object">Добавьте объекты</string>
     <string name="title_add_state">Добавьте состояния</string>
+    <string name="lbl_choose_object">Выбрать объект</string>
+    <string name="lbl_choose_state">Выбрать состояние</string>
+    <string name="lbl_subscribe_state">Описать состояние</string>
+    <string name="lbl_save_observation">Сохранить наблюдение</string>
+    <string name="lbl_finish_observation">Закончить наблюдение</string>
+    <string name="lbl_observation">Наблюдение</string>
 </resources>

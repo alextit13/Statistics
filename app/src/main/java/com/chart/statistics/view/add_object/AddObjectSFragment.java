@@ -75,6 +75,11 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
         });
     }
 
+    @Override
+    public void clearNameField() {
+        nameEditText.setText("");
+    }
+
     @SuppressLint("ResourceType")
     @Override
     public void showToastMessage(int idMessage) {

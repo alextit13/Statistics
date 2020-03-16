@@ -29,6 +29,8 @@ public class AddStatePresenter implements IAddStatePresenter {
                 new State(String.valueOf(new Date().getTime()),
                         name)
         );
+        view.showToastMessage(R.string.msg_save_success);
+        view.clearStateFiled();
     }
 
     @SuppressLint("ResourceType")
@@ -43,12 +45,13 @@ public class AddStatePresenter implements IAddStatePresenter {
             view.showToastMessage(R.string.msg_enter_correct_name);
         } else {
             view.showToastMessage(R.string.msg_delete_success);
+            view.clearStateFiled();
         }
     }
 
     @Override
     public void onClickNext() {
-
+        view.showAddDataScreen();
     }
 
     @Override

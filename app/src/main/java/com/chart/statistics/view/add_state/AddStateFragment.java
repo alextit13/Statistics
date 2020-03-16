@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.chart.statistics.R;
 import com.chart.statistics.presenter.add_state.AddStatePresenter;
 import com.chart.statistics.presenter.add_state.IAddStatePresenter;
+import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.data.AddDataFragment;
 
 public class AddStateFragment extends Fragment implements IAddStateView {
 
@@ -50,7 +52,15 @@ public class AddStateFragment extends Fragment implements IAddStateView {
         saveBtn = getView().findViewById(R.id.btnSaveState);
         deleteBtn = getView().findViewById(R.id.btnDeleteState);
         nextBtn = getView().findViewById(R.id.btnNextState);
+    }
 
+    @SuppressLint("ResourceType")
+    @Override
+    public void showToastMessage(int idMessage) {
+        Toast.makeText(getContext(), idMessage, Toast.LENGTH_LONG).show();
+    }
+
+    private void initListeners() {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,14 +81,16 @@ public class AddStateFragment extends Fragment implements IAddStateView {
         });
     }
 
-    @SuppressLint("ResourceType")
     @Override
-    public void showToastMessage(int idMessage) {
-        Toast.makeText(getContext(), idMessage, Toast.LENGTH_LONG).show();
+    public void clearStateFiled() {
+        nameEditText.setText("");
     }
 
-    private void initListeners() {
-
+    @Override
+    public void showAddDataScreen() {
+        if (getActivity() == null) return;
+        ((INavigation) getActivity()).showFragment(new AddDataFragment(),
+                getString(R.string.lbl_observation));
     }
 
     @Override

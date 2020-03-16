@@ -6,4 +6,6 @@ public interface IAddObjectSView {
     void showToastMessage(@IdRes int idMessage);
 
     void showAddStateScreen();
+
+    void clearNameField();
 }

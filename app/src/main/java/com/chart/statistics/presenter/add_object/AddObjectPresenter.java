@@ -34,6 +34,7 @@ public class AddObjectPresenter implements IAddObjectSPresenter {
                         new ArrayList<State>()
                 )
         );
+        view.clearNameField();
         view.showToastMessage(R.string.msg_save_success);
     }
 
@@ -47,6 +48,7 @@ public class AddObjectPresenter implements IAddObjectSPresenter {
         boolean result = DbEntry.newInstance().deleteObjectStatisticsByName(name);
         if (result) {
             view.showToastMessage(R.string.msg_delete_success);
+            view.clearNameField();
         } else {
             view.showToastMessage(R.string.msg_enter_correct_name);
         }
