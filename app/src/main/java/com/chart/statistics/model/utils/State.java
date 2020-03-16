@@ -4,6 +4,7 @@ public class State {
 
     private String id;
     private String name;
+    private String description;
 
     public State() {
     }
@@ -27,5 +28,13 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

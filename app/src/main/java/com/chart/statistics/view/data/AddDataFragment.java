@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,6 +83,22 @@ public class AddDataFragment extends Fragment implements IAddDataView {
         );
         if (!objectStatisticList.isEmpty()) {
             objectSpinner.setSelection(0);
+        }
+    }
+
+    @Override
+    public void showToastMessage(int idMessage) {
+        Toast.makeText(getContext(), idMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void clearFieldsToDefault() {
+        descriptionEditText.setText("");
+        if (objectSpinner.getAdapter().getCount() != 0) {
+            objectSpinner.setSelection(0);
+        }
+        if (stateSpinner.getAdapter().getCount() != 0) {
+            stateSpinner.setSelection(0);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.chart.statistics.presenter.add_data;
 
+import com.chart.statistics.R;
 import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.model.utils.State;
@@ -44,7 +45,15 @@ public class AddDataPresenter implements IAddDataPresenter {
 
     @Override
     public void onClickSaveObservation(int objectPosition, int statePosition, String description) {
-
+        ObjectStatistic objectStatistic = objectStatisticList.get(objectPosition);
+        State state = stateList.get(statePosition);
+        state.setDescription(description);
+        DbEntry.newInstance().addStateToObjectStatistics(
+                objectStatistic.getId(),
+                state
+        );
+        view.showToastMessage(R.string.msg_save_success);
+        view.clearFieldsToDefault();
     }
 
     @Override
