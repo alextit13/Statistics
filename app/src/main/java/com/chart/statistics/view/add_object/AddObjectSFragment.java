@@ -18,6 +18,7 @@ import com.chart.statistics.presenter.add_object.AddObjectPresenter;
 import com.chart.statistics.presenter.add_object.IAddObjectSPresenter;
 import com.chart.statistics.view.add_state.AddStateFragment;
 import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.data.AddDataFragment;
 
 public class AddObjectSFragment extends Fragment implements IAddObjectSView {
 
@@ -91,6 +92,13 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
         if (getActivity() == null) return;
 
         ((INavigation) getActivity()).showFragment(new AddStateFragment(), getString(R.string.title_add_state));
+    }
+
+    @Override
+    public void showDataScreen() {
+        if (getActivity() == null) return;
+
+        ((INavigation) getActivity()).showFragment(new AddDataFragment(), getString(R.string.lbl_observation));
     }
 
     @Override

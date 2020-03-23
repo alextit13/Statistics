@@ -34,5 +34,5 @@ public interface IDbEntry {
 
     List<Observation> getAllObservation();
 
-    Observation getLastNonCompleteConfirmation();
+    Observation getLastNonCompleteObservation();
 }

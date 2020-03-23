@@ -11,7 +11,6 @@ import com.chart.statistics.model.utils.State;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DbEntry implements IDbEntry {
@@ -221,20 +220,20 @@ public class DbEntry implements IDbEntry {
     }
 
     @Override
-    public Observation getLastNonCompleteConfirmation() {
+    public Observation getLastNonCompleteObservation() {
         List<Observation> list = getAllObservation();
         Observation observation = null;
         for (Observation o : list) {
             if (o.isCompleted())
                 observation = o;
         }
-        if (observation == null) {
+        /*if (observation == null) {
             observation = new Observation(
                     String.valueOf(new Date().getTime()),
                     "",
                     new ArrayList<ObjectStatistic>()
             );
-        }
+        }*/
         return observation;
     }
 

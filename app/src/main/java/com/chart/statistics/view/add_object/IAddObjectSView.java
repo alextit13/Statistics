@@ -8,4 +8,6 @@ public interface IAddObjectSView {
     void showAddStateScreen();
 
     void clearNameField();
+
+    void showDataScreen();
 }
