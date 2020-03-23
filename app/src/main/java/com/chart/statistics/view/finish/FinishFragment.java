@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.chart.statistics.R;
 import com.chart.statistics.presenter.finish.FinishPresenter;
 import com.chart.statistics.presenter.finish.IFinishPresenter;
+import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.list_observation.ListObservationFragment;
 
 public class FinishFragment extends Fragment implements IFinishView {
 
@@ -59,7 +61,12 @@ public class FinishFragment extends Fragment implements IFinishView {
 
     @Override
     public void openListObservationScreen() {
-        // TODO(): Implement this
+        if (getActivity() == null) {
+            return;
+        }
+
+        ((INavigation) getActivity()).showFragment(new ListObservationFragment(),
+                getString(R.string.lbl_observation));
     }
 
     @Override

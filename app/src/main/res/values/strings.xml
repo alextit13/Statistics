@@ -20,4 +20,9 @@
     <string name="lbl_name_observation">Название наблюдения</string>
     <string name="title_finish">Завершить</string>
     <string name="msg_error">Что-то пошло не так :-(</string>
+    <string name="lbl_choose_observation">Выберите наблюдение</string>
+    <string name="lbl_list">Список</string>
+    <string name="lbl_linear_diagram">Линейная диаграма</string>
+    <string name="lbl_circle_diagram">Круговая диаграма</string>
+    <string name="lbl_csv">CSV формат</string>
 </resources>
