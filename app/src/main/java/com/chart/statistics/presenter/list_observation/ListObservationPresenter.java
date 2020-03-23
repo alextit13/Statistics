@@ -54,7 +54,7 @@ public class ListObservationPresenter implements IListObservationPresenter {
         if (observationName.isEmpty()) {
             return position;
         }
-        for (int i = 0; i <= observationList.size(); i++) {
+        for (int i = 0; i < observationList.size(); i++) {
             if (observationList.get(i).getName().equals(observationName)) {
                 position = i;
             }
@@ -69,12 +69,32 @@ public class ListObservationPresenter implements IListObservationPresenter {
 
     @Override
     public void onClickLinearDiagramButton() {
-        // TODO(): Implement this
+        Observation chooseObservation = getChooseObservation();
+        if (chooseObservation == null) return;
+
+        view.openLinearDiagramScreen(getChooseObservation());
     }
 
     @Override
     public void onClickCircleDiagramButton() {
-        // TODO(): Implement this
+        Observation chooseObservation = getChooseObservation();
+        if (chooseObservation == null) return;
+
+        view.openCircleDiagramScreen(chooseObservation);
+    }
+
+    private Observation getChooseObservation() {
+        String observationName = view.getChooseObservation();
+        if (observationName == null || observationName.equals("")) {
+            return null;
+        }
+        Observation observation = null;
+        for (Observation o : observationList) {
+            if (o.getName().equals(observationName)) {
+                observation = o;
+            }
+        }
+        return observation;
     }
 
     @Override

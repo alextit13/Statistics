@@ -29,6 +29,8 @@ public class FinishPresenter implements IFinishPresenter {
             view.showToastMessage(R.string.msg_enter_correct_name);
             return;
         }
+        if (observation == null) return;
+
         observation.setName(name);
         observation.setCompleted(true);
         DbEntry.newInstance().updateObservation(observation);

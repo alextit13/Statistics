@@ -32,7 +32,7 @@
 
         <Button
             android:id="@+id/list_observation_btn"
-            android:text="@string/lbl_linear_diagram"
+            android:text="@string/lbl_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

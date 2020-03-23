@@ -1,5 +1,7 @@
 package com.chart.statistics.view.list_observation;
 
+import com.chart.statistics.model.utils.Observation;
+
 import java.util.List;
 
 public interface IListObservationView {
@@ -11,4 +13,10 @@ public interface IListObservationView {
     void showListObservationChooser(List<String> observationList);
 
     void setObservationInSpinner(int position);
+
+    void openLinearDiagramScreen(Observation observation);
+
+    void openCircleDiagramScreen(Observation observation);
+
+    String getChooseObservation();
 }

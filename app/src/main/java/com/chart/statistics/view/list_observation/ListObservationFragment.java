@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,10 +16,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
+import com.chart.statistics.model.utils.Observation;
+import com.chart.statistics.presenter.diagram.DiagramType;
 import com.chart.statistics.presenter.list_observation.IListObservationPresenter;
 import com.chart.statistics.presenter.list_observation.ListObservationPresenter;
+import com.chart.statistics.view.base.INavigation;
+import com.chart.statistics.view.diagram.DiagramFragment;
 
 import java.util.List;
+
+import static com.chart.statistics.view.diagram.DiagramFragment.TAG_ARGUMENTS_OBSERVATION_ID;
+import static com.chart.statistics.view.diagram.DiagramFragment.TAG_ARGUMENTS_TYPE;
 
 public class ListObservationFragment extends Fragment implements IListObservationView {
 
@@ -105,8 +111,7 @@ public class ListObservationFragment extends Fragment implements IListObservatio
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.lbl_observation);
-        builder.setMessage(R.string.msg_choose_observation);
-        ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, observationList);
+        ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, observationList);
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -114,8 +119,8 @@ public class ListObservationFragment extends Fragment implements IListObservatio
                 dialogInterface.dismiss();
             }
         });
-        builder.create();
-        builder.show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -124,6 +129,37 @@ public class ListObservationFragment extends Fragment implements IListObservatio
                 observationsSpinner.getAdapter().getCount() == 0) return;
 
         observationsSpinner.setSelection(position);
+    }
+
+    @Override
+    public void openLinearDiagramScreen(Observation observation) {
+        openTargetDiagramScreen(DiagramType.Linear, observation);
+    }
+
+    @Override
+    public void openCircleDiagramScreen(Observation observation) {
+        openTargetDiagramScreen(DiagramType.Circle, observation);
+    }
+
+    @Override
+    public String getChooseObservation() {
+        if (observationsSpinner.getAdapter() == null ||
+                observationsSpinner.getAdapter().getCount() == 0) {
+            return "";
+        } else {
+            return observationsSpinner.getSelectedItem().toString();
+        }
+    }
+
+    private void openTargetDiagramScreen(DiagramType type, Observation observation) {
+        if (getActivity() == null) return;
+
+        DiagramFragment fragment = new DiagramFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG_ARGUMENTS_TYPE, type.name());
+        bundle.putString(TAG_ARGUMENTS_OBSERVATION_ID, observation.getId());
+        fragment.setArguments(bundle);
+        ((INavigation) getActivity()).showFragment(fragment, getString(R.string.title_linear_diagram));
     }
 
     @Override
