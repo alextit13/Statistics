@@ -1,15 +1,26 @@
 package com.chart.statistics.presenter.finish;
 
 import com.chart.statistics.R;
+import com.chart.statistics.model.db.DbEntry;
+import com.chart.statistics.model.utils.Observation;
 import com.chart.statistics.view.finish.IFinishView;
 
 public class FinishPresenter implements IFinishPresenter {
 
     private IFinishView view;
+    private Observation observation;
 
     @Override
-    public void onViewAttach(IFinishView view, String observationId) {
+    public void onViewAttach(IFinishView view) {
         this.view = view;
+        getSavedObservation();
+    }
+
+    private void getSavedObservation() {
+        observation = DbEntry.newInstance().getLastNonCompleteObservation();
+        if (observation == null) {
+            view.showToastMessage(R.string.msg_error);
+        }
     }
 
     @Override
@@ -18,7 +29,10 @@ public class FinishPresenter implements IFinishPresenter {
             view.showToastMessage(R.string.msg_enter_correct_name);
             return;
         }
-        // TODO(): Implement this
+        observation.setName(name);
+        observation.setCompleted(true);
+        DbEntry.newInstance().updateObservation(observation);
+        view.openListObservationScreen();
     }
 
     @Override

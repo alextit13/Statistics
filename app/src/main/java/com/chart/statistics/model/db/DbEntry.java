@@ -199,7 +199,7 @@ public class DbEntry implements IDbEntry {
     @Override
     public List<Observation> getAllObservation() {
         List<Observation> observationList = new ArrayList<>();
-        Cursor cursor = getWritableStateDb().query(
+        Cursor cursor = getWritableObservationDb().query(
                 "observation_table",
                 null,
                 null,
@@ -224,16 +224,9 @@ public class DbEntry implements IDbEntry {
         List<Observation> list = getAllObservation();
         Observation observation = null;
         for (Observation o : list) {
-            if (o.isCompleted())
+            if (!o.isCompleted())
                 observation = o;
         }
-        /*if (observation == null) {
-            observation = new Observation(
-                    String.valueOf(new Date().getTime()),
-                    "",
-                    new ArrayList<ObjectStatistic>()
-            );
-        }*/
         return observation;
     }
 

@@ -22,8 +22,6 @@ import com.chart.statistics.view.finish.FinishFragment;
 
 import java.util.List;
 
-import static com.chart.statistics.view.finish.FinishFragment.KEY_OBSERVATION_ID;
-
 public class AddDataFragment extends Fragment implements IAddDataView {
 
     private IAddDataPresenter presenter;
@@ -122,11 +120,7 @@ public class AddDataFragment extends Fragment implements IAddDataView {
         if (getActivity() == null)
             return;
 
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_OBSERVATION_ID, "-1");
-        FinishFragment finishFragment = new FinishFragment();
-        finishFragment.setArguments(bundle);
-        ((INavigation) getActivity()).showFragment(finishFragment, getString(R.string.title_finish));
+        ((INavigation) getActivity()).showFragment(new FinishFragment(), getString(R.string.title_finish));
     }
 
     @Override

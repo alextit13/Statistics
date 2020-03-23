@@ -25,11 +25,11 @@ public class AddObjectPresenter implements IAddObjectSPresenter {
     private void handleNonCompleteObservation() {
         Observation observation = DbEntry.newInstance().getLastNonCompleteObservation();
         /*
-          If observation == null - we have non completed
+          If observation != null - we have non completed
           observation. This in process now. Now we can move to observation screen.
           On this moment it's AddDataFragment
          */
-        if (observation == null) {
+        if (observation != null) {
             view.showDataScreen();
         }
     }

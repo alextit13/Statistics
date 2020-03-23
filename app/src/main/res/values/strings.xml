@@ -19,4 +19,5 @@
     <string name="lbl_observation">Наблюдение</string>
     <string name="lbl_name_observation">Название наблюдения</string>
     <string name="title_finish">Завершить</string>
+    <string name="msg_error">Что-то пошло не так :-(</string>
 </resources>

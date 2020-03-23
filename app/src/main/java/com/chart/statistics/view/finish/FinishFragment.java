@@ -18,11 +18,9 @@ import com.chart.statistics.presenter.finish.IFinishPresenter;
 
 public class FinishFragment extends Fragment implements IFinishView {
 
-    public static final String KEY_OBSERVATION_ID = "key_observation_id";
     private IFinishPresenter presenter;
     private EditText nameObservationEditText;
     private Button saveButton;
-    private String observationId = "-1";
 
     @Nullable
     @Override
@@ -36,18 +34,9 @@ public class FinishFragment extends Fragment implements IFinishView {
         if (presenter == null) {
             presenter = new FinishPresenter();
         }
-        initArguments();
         initUi();
         initListeners();
-        presenter.onViewAttach(this, observationId);
-    }
-
-    private void initArguments() {
-        if (getArguments() == null) {
-            return;
-        }
-
-        observationId = getArguments().getString(KEY_OBSERVATION_ID);
+        presenter.onViewAttach(this);
     }
 
     private void initUi() {
@@ -66,6 +55,11 @@ public class FinishFragment extends Fragment implements IFinishView {
                 presenter.onClickSave(nameObservationEditText.getText().toString());
             }
         });
+    }
+
+    @Override
+    public void openListObservationScreen() {
+        // TODO(): Implement this
     }
 
     @Override

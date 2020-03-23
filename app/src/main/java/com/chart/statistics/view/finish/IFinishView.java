@@ -4,4 +4,6 @@ import androidx.annotation.StringRes;
 
 public interface IFinishView {
     void showToastMessage(@StringRes int idMessage);
+
+    void openListObservationScreen();
 }
