@@ -74,6 +74,16 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
                 presenter.onClickNext();
             }
         });
+
+        getView().findViewById(R.id.btnTest)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((INavigation) getActivity())
+                                .showFragment(new AddObjectSFragment(),
+                                        getString(R.string.title_add_object));
+                    }
+                });
     }
 
     @Override
