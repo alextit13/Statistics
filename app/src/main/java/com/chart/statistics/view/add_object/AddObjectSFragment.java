@@ -19,6 +19,7 @@ import com.chart.statistics.presenter.add_object.IAddObjectSPresenter;
 import com.chart.statistics.view.add_state.AddStateFragment;
 import com.chart.statistics.view.base.INavigation;
 import com.chart.statistics.view.data.AddDataFragment;
+import com.chart.statistics.view.list_observation.ListObservationFragment;
 
 public class AddObjectSFragment extends Fragment implements IAddObjectSView {
 
@@ -80,7 +81,7 @@ public class AddObjectSFragment extends Fragment implements IAddObjectSView {
                     @Override
                     public void onClick(View view) {
                         ((INavigation) getActivity())
-                                .showFragment(new AddObjectSFragment(),
+                                .showFragment(new ListObservationFragment(),
                                         getString(R.string.title_add_object));
                     }
                 });

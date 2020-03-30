@@ -14,13 +14,23 @@ import androidx.annotation.Nullable;
 import com.chart.statistics.model.DataHolder;
 import com.chart.statistics.model.utils.State;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class LinearDiagram extends View {
 
+    private static final int TOP_MARGIN = 80;
+    private static final int TEXT_TITLE_SIZE = 40;
+    private static final int TEXT_TIME_SIZE = 30;
+    private static final int BOTTOM_TEXT_MARGIN = 30;
+    private static final int DEFAULT_MARGINS = 16;
+
     private List<State> list;
     private Paint paint;
+    private String timeFinish;
+    private String nameTitle;
 
     public LinearDiagram(Context context) {
         super(context);
@@ -51,14 +61,13 @@ public class LinearDiagram extends View {
         if (list.isEmpty()) return;
 
         for (int i = 0; i <= list.size() - 1; i++) {
-            State state = list.get(i);
             Rect rect = new Rect(
                     getStartCoordinate(i),
-                    0,
+                    TOP_MARGIN,
                     getEndCoordinate(i),
-                    getHeight() / 3
+                    getHeight() / 2
             );
-            paint.setColor(getColorByStateName(state));
+            paint.setColor(getColorByStateName());
             canvas.drawRect(rect, paint);
         }
 
@@ -68,7 +77,9 @@ public class LinearDiagram extends View {
         // bottom horizontal line
         canvas.drawLine(0f, getHeight(), getWidth(), getHeight(), paint);
         // first vertical line
-        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight(), 0f + paint.getStrokeWidth(), getHeight() / 3, paint);
+        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight(), 0f + paint.getStrokeWidth(), getHeight() / 2, paint);
+        // end vertical line
+        canvas.drawLine(getWidth() - paint.getStrokeWidth(), getHeight(), getWidth() - paint.getStrokeWidth(), getHeight() / 2, paint);
 
         for (int i = 0; i < list.size() - 1; i++) {
             float startX = (getStartCoordinate(i) + getStartCoordinate(i + 1)) / 2;
@@ -77,10 +88,28 @@ public class LinearDiagram extends View {
                     startX,
                     getHeight(),
                     startX,
-                    getHeight() / 3,
+                    getHeight() / 2,
                     paint
             );
         }
+        // draw title
+        Paint titlePaint = new Paint();
+        titlePaint.setColor(Color.BLACK);
+        titlePaint.setStrokeWidth(9f);
+        titlePaint.setTextSize(TEXT_TITLE_SIZE);
+        canvas.drawText(nameTitle, 0f, BOTTOM_TEXT_MARGIN, titlePaint);
+        // draw start time
+        Paint startTimePaint = new Paint();
+        titlePaint.setColor(Color.BLACK);
+        titlePaint.setStrokeWidth(5f);
+        titlePaint.setTextSize(TEXT_TIME_SIZE);
+        canvas.drawText(getTimePattern(list.get(list.size() - 1).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, titlePaint);
+    }
+
+    private String getTimePattern(String longTime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
+        Date date = new Date(Long.parseLong(longTime));
+        return simpleDateFormat.format(date);
     }
 
     private int getStartCoordinate(int position) {
@@ -89,7 +118,7 @@ public class LinearDiagram extends View {
         } else {
             long time = Long.valueOf(list.get(position).getId());
             long timeFirstEvent = Long.valueOf(list.get(0).getId());
-            long numMillisecondsInAllInterval = (new Date().getTime() - (timeFirstEvent));
+            long numMillisecondsInAllInterval = (Long.parseLong(timeFinish) - (timeFirstEvent));
             float px = getWidth() / (float) numMillisecondsInAllInterval;
             return (int) ((time - timeFirstEvent) * px);
         }
@@ -104,12 +133,18 @@ public class LinearDiagram extends View {
     }
 
     private @ColorInt
-    int getColorByStateName(State state) {
-        return DataHolder.newInstance().getStateColorByState(state);
+    int getColorByStateName() {
+        return DataHolder.newInstance().getRandomColor();
     }
 
-    public void setSourceData(List<State> stateList) {
+    public void setSourceData(List<State> stateList, String timeObservationFinish) {
         list = stateList;
+        timeFinish = timeObservationFinish;
+        invalidate();
+    }
+
+    public void setTitle(String title) {
+        nameTitle = title;
         invalidate();
     }
 }

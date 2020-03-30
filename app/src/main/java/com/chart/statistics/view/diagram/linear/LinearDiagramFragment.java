@@ -8,16 +8,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chart.statistics.R;
+import com.chart.statistics.model.utils.State;
 import com.chart.statistics.presenter.diagram.linear.ILinearDiagramPresenter;
 import com.chart.statistics.presenter.diagram.linear.LinearDiagramPresenter;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static com.chart.statistics.view.diagram.circle.CircleDiagramFragment.TAG_ARGUMENTS_OBSERVATION_ID;
 
 public class LinearDiagramFragment extends Fragment implements ILinearDiagramView {
 
     private ILinearDiagramPresenter presenter;
+    private RecyclerView linearDiagramRecycleView;
+    private LinearDiagramAdapter adapter;
 
     @Nullable
     @Override
@@ -31,7 +38,14 @@ public class LinearDiagramFragment extends Fragment implements ILinearDiagramVie
         if (presenter == null) {
             presenter = new LinearDiagramPresenter();
         }
+        initUi();
         presenter.onViewAttach(this, getObservationIdFromBundle());
+    }
+
+    private void initUi(){
+        if (getView() == null) return;
+
+        linearDiagramRecycleView = getView().findViewById(R.id.recycler_view_linear_diagram);
     }
 
     private String getObservationIdFromBundle() {
@@ -39,6 +53,14 @@ public class LinearDiagramFragment extends Fragment implements ILinearDiagramVie
         if (bundle == null) return "";
 
         return bundle.getString(TAG_ARGUMENTS_OBSERVATION_ID);
+    }
+
+    @Override
+    public void initListDiagramAdapter(HashMap<String, List<State>> mapNameStates, String timeFinish) {
+        if (adapter == null) {
+            adapter = new LinearDiagramAdapter(mapNameStates, timeFinish);
+        }
+        linearDiagramRecycleView.setAdapter(adapter);
     }
 
     @Override

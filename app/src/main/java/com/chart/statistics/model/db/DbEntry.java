@@ -54,9 +54,10 @@ public class DbEntry implements IDbEntry {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", objectStatistic.getId());
         contentValues.put("data", gsonData);
-        getWritableObjectsDb()
+        int r = getWritableObjectsDb()
                 .update("statistic_table", contentValues,
                         "id=" + objectStatistic.getId(), null);
+        System.out.println("dsfsd");
     }
 
     @Override
@@ -226,6 +227,17 @@ public class DbEntry implements IDbEntry {
         for (Observation o : list) {
             if (!o.isCompleted())
                 observation = o;
+        }
+        return observation;
+    }
+
+    @Override
+    public Observation getObservationById(String id) {
+        Observation observation = null;
+        for (Observation o : getAllObservation()) {
+            if (o.getId().equals(id)) {
+                observation = o;
+            }
         }
         return observation;
     }

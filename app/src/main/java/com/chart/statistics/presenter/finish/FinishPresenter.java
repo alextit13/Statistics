@@ -5,6 +5,8 @@ import com.chart.statistics.model.db.DbEntry;
 import com.chart.statistics.model.utils.Observation;
 import com.chart.statistics.view.finish.IFinishView;
 
+import java.util.Date;
+
 public class FinishPresenter implements IFinishPresenter {
 
     private IFinishView view;
@@ -33,6 +35,7 @@ public class FinishPresenter implements IFinishPresenter {
 
         observation.setName(name);
         observation.setCompleted(true);
+        observation.setTimeFinish(String.valueOf(new Date().getTime()));
         DbEntry.newInstance().updateObservation(observation);
         view.openListObservationScreen();
     }

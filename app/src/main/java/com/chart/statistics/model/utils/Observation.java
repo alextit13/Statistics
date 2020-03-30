@@ -8,6 +8,7 @@ public class Observation {
     private String name;
     private List<ObjectStatistic> statisticList;
     private boolean isCompleted = false;
+    private String timeFinish;
 
     public Observation() {
     }
@@ -53,5 +54,13 @@ public class Observation {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public String getTimeFinish() {
+        return timeFinish;
+    }
+
+    public void setTimeFinish(String timeFinish) {
+        this.timeFinish = timeFinish;
     }
 }

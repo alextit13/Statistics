@@ -35,4 +35,6 @@ public interface IDbEntry {
     List<Observation> getAllObservation();
 
     Observation getLastNonCompleteObservation();
+
+    Observation getObservationById(String id);
 }
