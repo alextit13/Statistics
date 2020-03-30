@@ -67,7 +67,7 @@ public class LinearDiagram extends View {
                     getEndCoordinate(i),
                     getHeight() / 2
             );
-            paint.setColor(getColorByStateName());
+            paint.setColor(getColorByStateName(list.get(i)));
             canvas.drawRect(rect, paint);
         }
 
@@ -103,7 +103,7 @@ public class LinearDiagram extends View {
         startTimePaint.setColor(Color.BLACK);
         startTimePaint.setStrokeWidth(8f);
         startTimePaint.setTextSize(TEXT_TIME_SIZE);
-        canvas.drawText(getTimePattern(list.get(0).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, startTimePaint);
+        canvas.drawText(getDatePattern(list.get(0).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, startTimePaint);
         // draw end time
         Paint endTimePaint = new Paint();
         endTimePaint.setColor(Color.BLACK);
@@ -111,14 +111,14 @@ public class LinearDiagram extends View {
         endTimePaint.setTextSize(TEXT_TIME_SIZE);
         endTimePaint.setTextAlign(Paint.Align.RIGHT);
         Rect bounds = new Rect();
-        String timeEnd = getTimePattern(list.get(list.size() - 1).getId());
+        String timeEnd = getDatePattern(list.get(list.size() - 1).getId());
         endTimePaint.getTextBounds(timeEnd, 0, timeEnd.length(), bounds);
         canvas.drawText(timeEnd,
                 getWidth(),
                 BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, endTimePaint);
     }
 
-    private String getTimePattern(String longTime) {
+    private String getDatePattern(String longTime) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
         Date date = new Date(Long.parseLong(longTime));
         return simpleDateFormat.format(date);
@@ -145,8 +145,8 @@ public class LinearDiagram extends View {
     }
 
     private @ColorInt
-    int getColorByStateName() {
-        return DataHolder.newInstance().getRandomColor();
+    int getColorByStateName(State state) {
+        return DataHolder.newInstance().getRandomColor(state);
     }
 
     public void setSourceData(List<State> stateList, String timeObservationFinish) {
