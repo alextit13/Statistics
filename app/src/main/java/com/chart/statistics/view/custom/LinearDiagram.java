@@ -100,10 +100,22 @@ public class LinearDiagram extends View {
         canvas.drawText(nameTitle, 0f, BOTTOM_TEXT_MARGIN, titlePaint);
         // draw start time
         Paint startTimePaint = new Paint();
-        titlePaint.setColor(Color.BLACK);
-        titlePaint.setStrokeWidth(5f);
-        titlePaint.setTextSize(TEXT_TIME_SIZE);
-        canvas.drawText(getTimePattern(list.get(list.size() - 1).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, titlePaint);
+        startTimePaint.setColor(Color.BLACK);
+        startTimePaint.setStrokeWidth(8f);
+        startTimePaint.setTextSize(TEXT_TIME_SIZE);
+        canvas.drawText(getTimePattern(list.get(0).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, startTimePaint);
+        // draw end time
+        Paint endTimePaint = new Paint();
+        endTimePaint.setColor(Color.BLACK);
+        endTimePaint.setStrokeWidth(8f);
+        endTimePaint.setTextSize(TEXT_TIME_SIZE);
+        endTimePaint.setTextAlign(Paint.Align.RIGHT);
+        Rect bounds = new Rect();
+        String timeEnd = getTimePattern(list.get(list.size() - 1).getId());
+        endTimePaint.getTextBounds(timeEnd, 0, timeEnd.length(), bounds);
+        canvas.drawText(timeEnd,
+                getWidth(),
+                BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, endTimePaint);
     }
 
     private String getTimePattern(String longTime) {
