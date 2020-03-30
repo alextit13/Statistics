@@ -27,4 +27,5 @@
     <string name="lbl_csv">CSV формат</string>
     <string name="msg_choose_observation">Выберите наблюдение</string>
     <string name="title_linear_diagram">Линейная диаграма</string>
+    <string name="title_circle_diagram">Круговая диаграма</string>
 </resources>

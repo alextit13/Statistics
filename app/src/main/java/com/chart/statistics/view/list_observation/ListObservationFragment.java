@@ -17,16 +17,15 @@ import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
 import com.chart.statistics.model.utils.Observation;
-import com.chart.statistics.presenter.diagram.DiagramType;
 import com.chart.statistics.presenter.list_observation.IListObservationPresenter;
 import com.chart.statistics.presenter.list_observation.ListObservationPresenter;
 import com.chart.statistics.view.base.INavigation;
-import com.chart.statistics.view.diagram.DiagramFragment;
+import com.chart.statistics.view.diagram.circle.CircleDiagramFragment;
+import com.chart.statistics.view.diagram.linear.LinearDiagramFragment;
 
 import java.util.List;
 
-import static com.chart.statistics.view.diagram.DiagramFragment.TAG_ARGUMENTS_OBSERVATION_ID;
-import static com.chart.statistics.view.diagram.DiagramFragment.TAG_ARGUMENTS_TYPE;
+import static com.chart.statistics.view.diagram.circle.CircleDiagramFragment.TAG_ARGUMENTS_OBSERVATION_ID;
 
 public class ListObservationFragment extends Fragment implements IListObservationView {
 
@@ -133,12 +132,24 @@ public class ListObservationFragment extends Fragment implements IListObservatio
 
     @Override
     public void openLinearDiagramScreen(Observation observation) {
-        openTargetDiagramScreen(DiagramType.Linear, observation);
+        if (getActivity() == null) return;
+
+        LinearDiagramFragment fragment = new LinearDiagramFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG_ARGUMENTS_OBSERVATION_ID, observation.getId());
+        fragment.setArguments(bundle);
+        ((INavigation) getActivity()).showFragment(fragment, getString(R.string.title_linear_diagram));
     }
 
     @Override
     public void openCircleDiagramScreen(Observation observation) {
-        openTargetDiagramScreen(DiagramType.Circle, observation);
+        if (getActivity() == null) return;
+
+        CircleDiagramFragment fragment = new CircleDiagramFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG_ARGUMENTS_OBSERVATION_ID, observation.getId());
+        fragment.setArguments(bundle);
+        ((INavigation) getActivity()).showFragment(fragment, getString(R.string.title_circle_diagram));
     }
 
     @Override
@@ -149,17 +160,6 @@ public class ListObservationFragment extends Fragment implements IListObservatio
         } else {
             return observationsSpinner.getSelectedItem().toString();
         }
-    }
-
-    private void openTargetDiagramScreen(DiagramType type, Observation observation) {
-        if (getActivity() == null) return;
-
-        DiagramFragment fragment = new DiagramFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(TAG_ARGUMENTS_TYPE, type.name());
-        bundle.putString(TAG_ARGUMENTS_OBSERVATION_ID, observation.getId());
-        fragment.setArguments(bundle);
-        ((INavigation) getActivity()).showFragment(fragment, getString(R.string.title_linear_diagram));
     }
 
     @Override

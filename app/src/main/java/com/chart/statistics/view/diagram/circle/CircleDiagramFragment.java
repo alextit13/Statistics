@@ -1,4 +1,4 @@
-package com.chart.statistics.view.diagram;
+package com.chart.statistics.view.diagram.circle;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,35 +12,32 @@ import androidx.fragment.app.Fragment;
 
 import com.chart.statistics.R;
 import com.chart.statistics.model.utils.State;
-import com.chart.statistics.presenter.diagram.DiagramPresenter;
-import com.chart.statistics.presenter.diagram.DiagramType;
-import com.chart.statistics.presenter.diagram.IDiagramPresenter;
+import com.chart.statistics.presenter.diagram.circle.CircleDiagramPresenter;
+import com.chart.statistics.presenter.diagram.circle.ICircleDiagramPresenter;
 import com.chart.statistics.view.custom.CircleDiagram;
-import com.chart.statistics.view.custom.LinearDiagram;
 
 import java.util.List;
 
-public class DiagramFragment extends Fragment implements IDiagramView {
+public class CircleDiagramFragment extends Fragment implements ICircleDiagramView {
 
-    public static final String TAG_ARGUMENTS_TYPE = "tag_diagram_type";
     public static final String TAG_ARGUMENTS_OBSERVATION_ID = "tag_observation_id";
-    private IDiagramPresenter presenter;
+    private ICircleDiagramPresenter presenter;
     private FrameLayout diagramContainerFrameLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_diagram, container, false);
+        return inflater.inflate(R.layout.fragment_circle_diagram, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (presenter == null) {
-            presenter = new DiagramPresenter();
+            presenter = new CircleDiagramPresenter();
         }
         initUi();
-        presenter.onViewAttach(this, getDiagramTypeFromArguments(), getObservationIdFromArguments());
+        presenter.onViewAttach(this, getObservationIdFromArguments());
     }
 
     private void initUi() {
@@ -54,25 +51,6 @@ public class DiagramFragment extends Fragment implements IDiagramView {
         presenter.onViewDetach();
         presenter = null;
         super.onPause();
-    }
-
-    private DiagramType getDiagramTypeFromArguments() {
-        if (getArguments() == null) {
-            return null;
-        }
-
-        String nameTypeDiagram = getArguments().getString(TAG_ARGUMENTS_TYPE);
-        if (nameTypeDiagram == null || nameTypeDiagram.equals("")) {
-            return null;
-        }
-
-        if (nameTypeDiagram.equals(DiagramType.Linear.name())) {
-            return DiagramType.Linear;
-        } else if (nameTypeDiagram.equals(DiagramType.Circle.name())) {
-            return DiagramType.Circle;
-        } else {
-            return null;
-        }
     }
 
     private String getObservationIdFromArguments() {
@@ -89,14 +67,7 @@ public class DiagramFragment extends Fragment implements IDiagramView {
     }
 
     @Override
-    public void initLinearDiagram(List<State> states) {
-        LinearDiagram linearDiagram = new LinearDiagram(getContext());
-        linearDiagram.setSourceData(states);
-        diagramContainerFrameLayout.addView(linearDiagram);
-    }
-
-    @Override
-    public void initCircleDiagram(List<State> states) {
+    public void initDiagram(List<State> states) {
         CircleDiagram circleDiagram = new CircleDiagram(getContext());
         circleDiagram.setSourceData(states);
         diagramContainerFrameLayout.addView(circleDiagram);
