@@ -25,6 +25,16 @@ public class LinearDiagramAdapter extends RecyclerView.Adapter<LinearDiagramAdap
         timeObservationFinish = timeFinish;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,9 +47,10 @@ public class LinearDiagramAdapter extends RecyclerView.Adapter<LinearDiagramAdap
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+        Object [] arr = mapNameStates.keySet().toArray();
+        String key = arr[position].toString();
         Iterator iterator = mapNameStates.keySet().iterator();
         if (iterator.hasNext()) {
-            String key = ((String) iterator.next());
             holder.linearDiagram.setSourceData(mapNameStates.get(key), timeObservationFinish);
             holder.linearDiagram.setTitle(key);
         }

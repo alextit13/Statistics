@@ -26,6 +26,7 @@ public class LinearDiagram extends View {
     private static final int TEXT_TIME_SIZE = 30;
     private static final int BOTTOM_TEXT_MARGIN = 30;
     private static final int DEFAULT_MARGINS = 16;
+    private static final int BOTTOM_MARGINS = 40;
 
     private List<State> list;
     private Paint paint;
@@ -60,7 +61,8 @@ public class LinearDiagram extends View {
 
         if (list.isEmpty()) return;
 
-        for (int i = 0; i <= list.size() - 1; i++) {
+        // draw main rects
+        for (int i = 0; i < list.size(); i++) {
             Rect rect = new Rect(
                     getStartCoordinate(i),
                     TOP_MARGIN,
@@ -75,22 +77,30 @@ public class LinearDiagram extends View {
         paint.setStrokeWidth(2);
 
         // bottom horizontal line
-        canvas.drawLine(0f, getHeight(), getWidth(), getHeight(), paint);
+        canvas.drawLine(0f, getHeight() - BOTTOM_MARGINS, getWidth(), getHeight() - BOTTOM_MARGINS, paint);
         // first vertical line
-        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight(), 0f + paint.getStrokeWidth(), getHeight() / 2, paint);
+        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight() - BOTTOM_MARGINS, 0f + paint.getStrokeWidth(), getHeight() / 2, paint);
         // end vertical line
-        canvas.drawLine(getWidth() - paint.getStrokeWidth(), getHeight(), getWidth() - paint.getStrokeWidth(), getHeight() / 2, paint);
-
+        canvas.drawLine(getWidth() - paint.getStrokeWidth(), getHeight() - BOTTOM_MARGINS, getWidth() - paint.getStrokeWidth(), getHeight() / 2, paint);
+        // draw vertical lines
+        Rect textTimeBounds = new Rect();
+        Paint timePaint = new Paint();
+        timePaint.setTextSize(24f);
+        timePaint.setColor(Color.BLACK);
+        timePaint.setTextAlign(Paint.Align.CENTER);
         for (int i = 0; i < list.size() - 1; i++) {
             float startX = (getStartCoordinate(i) + getStartCoordinate(i + 1)) / 2;
-
             canvas.drawLine(
                     startX,
-                    getHeight(),
+                    getHeight() - BOTTOM_MARGINS,
                     startX,
                     getHeight() / 2,
                     paint
             );
+            // draw time below vertical lines
+            String time = getTimePattern(list.get(i).getId());
+            timePaint.getTextBounds(time, 0, time.length(), textTimeBounds);
+            // canvas.drawText(time, startX, getHeight(), timePaint);
         }
         // draw title
         Paint titlePaint = new Paint();
@@ -120,6 +130,12 @@ public class LinearDiagram extends View {
 
     private String getDatePattern(String longTime) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
+        Date date = new Date(Long.parseLong(longTime));
+        return simpleDateFormat.format(date);
+    }
+
+    private String getTimePattern(String longTime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm", Locale.ROOT);
         Date date = new Date(Long.parseLong(longTime));
         return simpleDateFormat.format(date);
     }
