@@ -18,11 +18,16 @@ import java.util.List;
 public class LinearDiagramAdapter extends RecyclerView.Adapter<LinearDiagramAdapter.Holder> {
 
     private HashMap<String, List<State>> mapNameStates;
+    private String timeStartObservation;
     private String timeObservationFinish;
 
-    LinearDiagramAdapter(HashMap<String, List<State>> mapNameStates, String timeFinish) {
+    LinearDiagramAdapter(HashMap<String,
+            List<State>> mapNameStates,
+                         String timeStartObservation,
+                         String timeObservationFinish) {
         this.mapNameStates = mapNameStates;
-        timeObservationFinish = timeFinish;
+        this.timeStartObservation = timeStartObservation;
+        this.timeObservationFinish = timeObservationFinish;
     }
 
     @Override
@@ -47,11 +52,15 @@ public class LinearDiagramAdapter extends RecyclerView.Adapter<LinearDiagramAdap
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        Object [] arr = mapNameStates.keySet().toArray();
+        Object[] arr = mapNameStates.keySet().toArray();
         String key = arr[position].toString();
         Iterator iterator = mapNameStates.keySet().iterator();
         if (iterator.hasNext()) {
-            holder.linearDiagram.setSourceData(mapNameStates.get(key), timeObservationFinish);
+            holder.linearDiagram.setSourceData(
+                    mapNameStates.get(key),
+                    timeStartObservation,
+                    timeObservationFinish
+            );
             holder.linearDiagram.setTitle(key);
         }
     }

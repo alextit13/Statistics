@@ -6,5 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface ILinearDiagramView {
-    void initListDiagramAdapter(HashMap<String, List<State>> mapNameStates, String timeFinish);
+    void initListDiagramAdapter(HashMap<String, List<State>> mapNameStates,
+                                String timeStart,
+                                String timeFinish);
 }

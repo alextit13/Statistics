@@ -30,8 +30,11 @@ public class LinearDiagram extends View {
 
     private List<State> list;
     private Paint paint;
-    private String timeFinish;
+    private String timeStartObservation;
+    private String timeFinishObservation;
     private String nameTitle;
+
+    private int startCoordinate = 0;
 
     public LinearDiagram(Context context) {
         super(context);
@@ -63,25 +66,55 @@ public class LinearDiagram extends View {
 
         // draw main rects
         for (int i = 0; i < list.size(); i++) {
+            int endCoordinate = getCoordinate(i);
+
             Rect rect = new Rect(
-                    getStartCoordinate(i),
+                    startCoordinate,
                     TOP_MARGIN,
-                    getEndCoordinate(i),
+                    endCoordinate,
                     getHeight() / 2
             );
             paint.setColor(getColorByStateName(list.get(i)));
             canvas.drawRect(rect, paint);
+            startCoordinate = endCoordinate;
         }
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(2);
+        // draw last interval
+        Rect lastRect = new Rect(
+                startCoordinate, // now startCoordinate = endCoordinate
+                TOP_MARGIN,
+                getWidth(),
+                getHeight() / 2
+        );
+        paint.setColor(Color.GRAY);
+        canvas.drawRect(lastRect, paint);
 
         // bottom horizontal line
-        canvas.drawLine(0f, getHeight() - BOTTOM_MARGINS, getWidth(), getHeight() - BOTTOM_MARGINS, paint);
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(2);
+        canvas.drawLine(
+                0f,
+                getHeight() - BOTTOM_MARGINS,
+                getWidth(),
+                getHeight() - BOTTOM_MARGINS,
+                paint);
+
         // first vertical line
-        canvas.drawLine(0f + paint.getStrokeWidth(), getHeight() - BOTTOM_MARGINS, 0f + paint.getStrokeWidth(), getHeight() / 2, paint);
+        canvas.drawLine(
+                0f + paint.getStrokeWidth(),
+                getHeight() - BOTTOM_MARGINS,
+                0f + paint.getStrokeWidth(),
+                getHeight() / 2,
+                paint);
+
         // end vertical line
-        canvas.drawLine(getWidth() - paint.getStrokeWidth(), getHeight() - BOTTOM_MARGINS, getWidth() - paint.getStrokeWidth(), getHeight() / 2, paint);
+        canvas.drawLine(
+                getWidth() - paint.getStrokeWidth(),
+                getHeight() - BOTTOM_MARGINS,
+                getWidth() - paint.getStrokeWidth(),
+                getHeight() / 2,
+                paint);
+
         // draw vertical lines
         Rect textTimeBounds = new Rect();
         Paint timePaint = new Paint();
@@ -89,7 +122,7 @@ public class LinearDiagram extends View {
         timePaint.setColor(Color.BLACK);
         timePaint.setTextAlign(Paint.Align.CENTER);
         for (int i = 0; i < list.size() - 1; i++) {
-            float startX = (getStartCoordinate(i) + getStartCoordinate(i + 1)) / 2;
+            float startX = (getCoordinate(i) + getCoordinate(i + 1)) / 2;
             canvas.drawLine(
                     startX,
                     getHeight() - BOTTOM_MARGINS,
@@ -100,20 +133,27 @@ public class LinearDiagram extends View {
             // draw time below vertical lines
             String time = getTimePattern(list.get(i).getId());
             timePaint.getTextBounds(time, 0, time.length(), textTimeBounds);
-            // canvas.drawText(time, startX, getHeight(), timePaint);
         }
+
         // draw title
         Paint titlePaint = new Paint();
         titlePaint.setColor(Color.BLACK);
         titlePaint.setStrokeWidth(9f);
         titlePaint.setTextSize(TEXT_TITLE_SIZE);
         canvas.drawText(nameTitle, 0f, BOTTOM_TEXT_MARGIN, titlePaint);
+
         // draw start time
         Paint startTimePaint = new Paint();
         startTimePaint.setColor(Color.BLACK);
         startTimePaint.setStrokeWidth(8f);
         startTimePaint.setTextSize(TEXT_TIME_SIZE);
-        canvas.drawText(getDatePattern(list.get(0).getId()), 0f, BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS, startTimePaint);
+        canvas.drawText(
+                getDatePattern(
+                        list.get(0).getId()),
+                0f,
+                BOTTOM_TEXT_MARGIN + TEXT_TIME_SIZE + DEFAULT_MARGINS,
+                startTimePaint);
+
         // draw end time
         Paint endTimePaint = new Paint();
         endTimePaint.setColor(Color.BLACK);
@@ -129,7 +169,8 @@ public class LinearDiagram extends View {
     }
 
     private String getDatePattern(String longTime) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
         Date date = new Date(Long.parseLong(longTime));
         return simpleDateFormat.format(date);
     }
@@ -140,24 +181,15 @@ public class LinearDiagram extends View {
         return simpleDateFormat.format(date);
     }
 
-    private int getStartCoordinate(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            long time = Long.valueOf(list.get(position).getId());
-            long timeFirstEvent = Long.valueOf(list.get(0).getId());
-            long numMillisecondsInAllInterval = (Long.parseLong(timeFinish) - (timeFirstEvent));
-            float px = getWidth() / (float) numMillisecondsInAllInterval;
-            return (int) ((time - timeFirstEvent) * px);
-        }
-    }
+    private int getCoordinate(int position) {
+        long timeCurrent = Long.valueOf(list.get(position).getId());
+        long timeStart = Long.valueOf(timeStartObservation);
+        long timeEnd = Long.valueOf(timeFinishObservation);
 
-    private int getEndCoordinate(int position) {
-        if (position == list.size() - 1) {
-            return getWidth();
-        } else {
-            return getStartCoordinate(position + 1);
-        }
+        long numMillisecondsInAllInterval = timeEnd - timeStart;
+
+        float pixelsInOneMilliseconds = getWidth() / (float) numMillisecondsInAllInterval;
+        return (int) ((timeCurrent - timeStart) * pixelsInOneMilliseconds);
     }
 
     private @ColorInt
@@ -165,9 +197,12 @@ public class LinearDiagram extends View {
         return DataHolder.newInstance().getRandomColor(state);
     }
 
-    public void setSourceData(List<State> stateList, String timeObservationFinish) {
+    public void setSourceData(List<State> stateList,
+                              String timeStartObservation,
+                              String timeObservationFinish) {
         list = stateList;
-        timeFinish = timeObservationFinish;
+        this.timeStartObservation = timeStartObservation;
+        timeFinishObservation = timeObservationFinish;
         invalidate();
     }
 

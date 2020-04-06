@@ -56,9 +56,12 @@ public class LinearDiagramFragment extends Fragment implements ILinearDiagramVie
     }
 
     @Override
-    public void initListDiagramAdapter(HashMap<String, List<State>> mapNameStates, String timeFinish) {
+    public void initListDiagramAdapter(
+            HashMap<String, List<State>> mapNameStates,
+            String timeStart,
+            String timeFinish) {
         if (adapter == null) {
-            adapter = new LinearDiagramAdapter(mapNameStates, timeFinish);
+            adapter = new LinearDiagramAdapter(mapNameStates, timeStart, timeFinish);
         }
         linearDiagramRecycleView.setAdapter(adapter);
     }

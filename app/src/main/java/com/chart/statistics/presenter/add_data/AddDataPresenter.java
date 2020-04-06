@@ -48,10 +48,12 @@ public class AddDataPresenter implements IAddDataPresenter {
     }
 
     @Override
-    public void onClickSaveObservation(int objectPosition, int statePosition, String description) {
+    public void onClickSaveObservation(
+            int objectPosition,
+            int statePosition,
+            String description) {
         ObjectStatistic objectStatistic = objectStatisticList.get(objectPosition);
-        State state = stateList.get(statePosition);
-        state.setDescription(description);
+        State state = new State(String.valueOf(new Date().getTime()), stateList.get(statePosition).getName());
         List<State> stateList = objectStatistic.getStates();
         stateList.add(state);
 
