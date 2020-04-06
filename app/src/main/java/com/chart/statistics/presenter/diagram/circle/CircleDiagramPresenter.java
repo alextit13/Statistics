@@ -1,15 +1,19 @@
 package com.chart.statistics.presenter.diagram.circle;
 
 import com.chart.statistics.model.db.DbEntry;
+import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.model.utils.Observation;
+import com.chart.statistics.model.utils.State;
 import com.chart.statistics.view.diagram.circle.ICircleDiagramView;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CircleDiagramPresenter implements ICircleDiagramPresenter {
 
     private ICircleDiagramView view;
     private String observationId;
+    private HashMap<String, List<State>> mapNameStates;
 
     @Override
     public void onViewAttach(ICircleDiagramView view, String observationId) {
@@ -19,16 +23,28 @@ public class CircleDiagramPresenter implements ICircleDiagramPresenter {
     }
 
     private void initTargetDiagram() {
-        Observation observation = null;
+        if (mapNameStates == null) {
+            mapNameStates = new HashMap<>();
+        }
+
+        Observation currentObservation = null;
         List<Observation> listObservations = DbEntry.newInstance().getAllObservation();
         for (Observation o : listObservations) {
             if (o.getId().equals(observationId)) {
-                observation = o;
+                currentObservation = o;
             }
         }
-        if (observation == null) return;
+        if (currentObservation == null) return;
 
-        // TODO(): Now show only first statistics. In future need replace viw to list views diagrams.
+        List<ObjectStatistic> objectStatisticList = currentObservation.getStatisticList();
+        if (objectStatisticList == null || objectStatisticList.isEmpty()) return;
+
+        for (ObjectStatistic objectStatistic : objectStatisticList) {
+            mapNameStates.put(objectStatistic.getName(), objectStatistic.getStates());
+        }
+        if (!mapNameStates.isEmpty()) {
+            view.initListDiagramAdapter(mapNameStates, currentObservation.getTimeFinish(), currentObservation.getId());
+        }
     }
 
     @Override

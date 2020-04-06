@@ -4,25 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chart.statistics.R;
 import com.chart.statistics.model.utils.State;
 import com.chart.statistics.presenter.diagram.circle.CircleDiagramPresenter;
 import com.chart.statistics.presenter.diagram.circle.ICircleDiagramPresenter;
-import com.chart.statistics.view.custom.CircleDiagram;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CircleDiagramFragment extends Fragment implements ICircleDiagramView {
 
     public static final String TAG_ARGUMENTS_OBSERVATION_ID = "tag_observation_id";
     private ICircleDiagramPresenter presenter;
-    private FrameLayout diagramContainerFrameLayout;
+    private CircleDiagramAdapter adapter;
+    private RecyclerView circleDiagramRecyclerView;
 
     @Nullable
     @Override
@@ -43,7 +44,7 @@ public class CircleDiagramFragment extends Fragment implements ICircleDiagramVie
     private void initUi() {
         if (getView() == null) return;
 
-        diagramContainerFrameLayout = getView().findViewById(R.id.frameLayoutDiagramContainer);
+        circleDiagramRecyclerView = getView().findViewById(R.id.circle_statistics_diagram);
     }
 
     @Override
@@ -67,9 +68,18 @@ public class CircleDiagramFragment extends Fragment implements ICircleDiagramVie
     }
 
     @Override
-    public void initDiagram(List<State> states) {
-        CircleDiagram circleDiagram = new CircleDiagram(getContext());
-        circleDiagram.setSourceData(states);
-        diagramContainerFrameLayout.addView(circleDiagram);
+    public void initListDiagramAdapter(HashMap<String, List<State>> mapNameStates, String timeStart, String timeFinish) {
+        if (adapter == null) {
+            adapter = new CircleDiagramAdapter(
+                    mapNameStates,
+                    timeStart,
+                    timeFinish
+            );
+        } else {
+            adapter.setMapNameStates(mapNameStates);
+            if (circleDiagramRecyclerView.getAdapter() != null)
+                circleDiagramRecyclerView.getAdapter().notifyDataSetChanged();
+        }
+        circleDiagramRecyclerView.setAdapter(adapter);
     }
 }
