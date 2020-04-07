@@ -12,7 +12,7 @@ import java.util.Random;
 public class DataHolder {
 
     private static DataHolder instance;
-    private static HashMap<State, Integer> mapStateColors;
+    private static HashMap<String, Integer> mapStateColors;
 
     public static DataHolder newInstance() {
         if (instance == null) {
@@ -22,17 +22,21 @@ public class DataHolder {
     }
 
     public @ColorInt
-    int getRandomColor(State state) {
+    int getColorsForStates(State state) {
         if (mapStateColors == null) {
             mapStateColors = new HashMap<>();
         }
-        if (mapStateColors.get(state) == null) {
+        if (mapStateColors.get(state.getName()) == null) {
             Random rnd = new Random();
             int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            mapStateColors.put(state, color);
+            mapStateColors.put(state.getName(), color);
             return color;
         } else {
-            return mapStateColors.get(state);
+            return mapStateColors.get(state.getName());
         }
+    }
+
+    public HashMap<String, Integer> getMapColor() {
+        return mapStateColors;
     }
 }

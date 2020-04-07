@@ -28,8 +28,11 @@ public class LinearDiagramFragment extends Fragment implements ILinearDiagramVie
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_linear_diagram, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater
+                .inflate(R.layout.fragment_linear_diagram, container, false);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class LinearDiagramFragment extends Fragment implements ILinearDiagramVie
         presenter.onViewAttach(this, getObservationIdFromBundle());
     }
 
-    private void initUi(){
+    private void initUi() {
         if (getView() == null) return;
 
         linearDiagramRecycleView = getView().findViewById(R.id.recycler_view_linear_diagram);

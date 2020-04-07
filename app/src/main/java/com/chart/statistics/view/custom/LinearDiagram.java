@@ -194,7 +194,7 @@ public class LinearDiagram extends View {
 
     private @ColorInt
     int getColorByStateName(State state) {
-        return DataHolder.newInstance().getRandomColor(state);
+        return DataHolder.newInstance().getColorsForStates(state);
     }
 
     public void setSourceData(List<State> stateList,

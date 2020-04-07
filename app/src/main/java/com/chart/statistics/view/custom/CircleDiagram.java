@@ -78,7 +78,7 @@ public class CircleDiagram extends View {
         }
     }
 
-    private float getAngle(String time){
+    private float getAngle(String time) {
         long timeStart = Long.parseLong(timeSt);
         long timeCurrent = Long.parseLong(time);
         long timeEnd = Long.parseLong(timeFin);
@@ -91,7 +91,7 @@ public class CircleDiagram extends View {
 
     private @ColorInt
     int getColorByStateName(State state) {
-        return DataHolder.newInstance().getRandomColor(state);
+        return DataHolder.newInstance().getColorsForStates(state);
     }
 
     public void setSourceData(
