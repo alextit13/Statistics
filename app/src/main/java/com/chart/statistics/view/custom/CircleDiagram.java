@@ -22,8 +22,8 @@ public class CircleDiagram extends View {
 
     private List<State> data;
     private Paint paint;
-    private String timeStart;
-    private String timeFinish;
+    private String timeFin;
+    private String timeSt;
 
     private RectF oval;
 
@@ -51,7 +51,7 @@ public class CircleDiagram extends View {
         paint.setStyle(Paint.Style.FILL);
     }
 
-    float p = .0f;
+    float startAngle = .0f;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -66,45 +66,27 @@ public class CircleDiagram extends View {
         if (oval == null)
             oval = new RectF();
 
-        float flipAngle = getSweepAngle(timeStart, data.get(0).getId());
-
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.GRAY);
         oval.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
-        canvas.drawArc(oval, p, flipAngle, true, paint);
-        p = flipAngle;
+        canvas.drawArc(oval, startAngle, 360, true, paint);
 
         for (int i = 0; i < data.size(); i++) {
-            String timeCurrent = data.get(i).getId();
-            String timePrevious;
-
-            if (i == 0) {
-                timePrevious = data.get(0).getId();
-            } else {
-                timePrevious = data.get(i - 1).getId();
-            }
-
             paint.setColor(getColorByStateName(data.get(i)));
-            flipAngle = getSweepAngle(timePrevious, timeCurrent);
-
-            canvas.drawArc(oval, p, flipAngle, true, paint);
-            p = p + flipAngle;
+            float swipeAngle = getAngle(data.get(i).getId()) - startAngle;
+            canvas.drawArc(oval, startAngle, swipeAngle, true, paint);
+            startAngle += swipeAngle;
         }
-        flipAngle = getSweepAngle(data.get(data.size() - 1).getId(), timeFinish);
-        canvas.drawArc(oval, p, flipAngle, true, paint);
     }
 
-    private float getSweepAngle(String previousTime, String currentTime) {
-        float previous = getStartAngle(previousTime);
-        float current = getStartAngle(currentTime);
-        return current - previous;
-    }
+    private float getAngle(String time){
+        long timeStart = Long.parseLong(timeSt);
+        long timeCurrent = Long.parseLong(time);
+        long timeEnd = Long.parseLong(timeFin);
 
-    private float getStartAngle(String time) {
-        long previous = Long.parseLong(time);
-        long start = Long.parseLong(timeStart);
-        if (previous == start) return 0;
-        long finish = Long.parseLong(timeFinish);
-        return (float) ((360 * (previous - start)) / (finish - start));
+        long numMillisecondsInAllInterval = timeEnd - timeStart;
+        float degreesInOneMillisecond = 360 / (float) numMillisecondsInAllInterval;
+
+        return (timeCurrent - timeStart) * degreesInOneMillisecond;
     }
 
     private @ColorInt
@@ -117,9 +99,9 @@ public class CircleDiagram extends View {
             String timeObservationStart,
             String timeObservationFinish
     ) {
-        this.timeStart = timeObservationStart;
+        this.timeFin = timeObservationStart;
         data = states;
-        this.timeFinish = timeObservationFinish;
+        this.timeSt = timeObservationFinish;
         invalidate();
     }
 }

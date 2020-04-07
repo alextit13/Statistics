@@ -1,6 +1,7 @@
 package com.chart.statistics.presenter.diagram.circle;
 
 import com.chart.statistics.model.db.DbEntry;
+import com.chart.statistics.model.manager.MapDataManager;
 import com.chart.statistics.model.utils.ObjectStatistic;
 import com.chart.statistics.model.utils.Observation;
 import com.chart.statistics.model.utils.State;
@@ -42,6 +43,7 @@ public class CircleDiagramPresenter implements ICircleDiagramPresenter {
         for (ObjectStatistic objectStatistic : objectStatisticList) {
             mapNameStates.put(objectStatistic.getName(), objectStatistic.getStates());
         }
+        mapNameStates = MapDataManager.newInstance().sortMap(mapNameStates);
         if (!mapNameStates.isEmpty()) {
             view.initListDiagramAdapter(mapNameStates, currentObservation.getTimeFinish(), currentObservation.getId());
         }
